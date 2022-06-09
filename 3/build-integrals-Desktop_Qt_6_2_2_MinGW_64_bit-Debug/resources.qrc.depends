@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/drawable">
+        <file>res/logo.png</file>
+    </qresource>
+</RCC>

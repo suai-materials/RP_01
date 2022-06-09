@@ -1,0 +1,132 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "integrals",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint-Debug-c2b5e7fc76583272af2c.json",
+					"name" : "all_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmltyperegistrations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmltyperegistrations-Debug-4284cf24227bf702288b.json",
+					"name" : "all_qmltyperegistrations",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals-Debug-77e78577ed5c238525dc.json",
+					"name" : "appintegrals",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals_autogen-Debug-56c840522abd36558861.json",
+					"name" : "appintegrals_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals_autogen_timestamp_deps-Debug-29ff7c33319e96d11880.json",
+					"name" : "appintegrals_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals_other_files::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals_other_files-Debug-c6922b9db95c313d4fde.json",
+					"name" : "appintegrals_other_files",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals_qmllint-Debug-1db0e705f2efa8142446.json",
+					"name" : "appintegrals_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals_qmltyperegistration::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals_qmltyperegistration-Debug-18935b8cbca05eaf0fdd.json",
+					"name" : "appintegrals_qmltyperegistration",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appintegrals_tooling::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appintegrals_tooling-Debug-c487e4c093a2b528c28e.json",
+					"name" : "appintegrals_tooling",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
+		"source" : "C:/Users/user/Desktop/_ПР_01/3/integrals"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
