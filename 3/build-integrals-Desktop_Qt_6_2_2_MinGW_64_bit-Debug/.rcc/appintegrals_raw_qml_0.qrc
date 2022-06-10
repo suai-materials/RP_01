@@ -1,6 +1,8 @@
 <RCC>
   <qresource prefix="/integrals/">
-    <file alias="main.qml">C:/Users/user/Desktop/_ПР_01/3/integrals/main.qml</file>
+    <file alias="main.qml">C:/Users/user/Desktop/_PR_01/3/integrals/main.qml</file>
+    <file alias="auth.qml">C:/Users/user/Desktop/_PR_01/3/integrals/auth.qml</file>
+    <file alias="splash.qml">C:/Users/user/Desktop/_PR_01/3/integrals/splash.qml</file>
   </qresource>
 </RCC>
 

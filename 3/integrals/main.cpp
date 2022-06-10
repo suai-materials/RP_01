@@ -3,11 +3,12 @@
 
 #include <QLocale>
 #include <QTranslator>
+#include <splashscreen.h>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
+    // qmlRegisterType<SplashScreen>("com.integrals.splashscreen", 1, 0, "SplashScreen");
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {

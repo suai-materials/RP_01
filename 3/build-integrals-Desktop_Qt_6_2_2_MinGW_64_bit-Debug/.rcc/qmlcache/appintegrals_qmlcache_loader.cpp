@@ -10,6 +10,20 @@ namespace _integrals_main_qml {
         reinterpret_cast<const QV4::CompiledData::Unit*>(&qmlData), &aotBuiltFunctions[0], nullptr
     };
 }
+namespace _integrals_auth_qml { 
+    extern const unsigned char qmlData[];
+    extern const QQmlPrivate::AOTCompiledFunction aotBuiltFunctions[];
+    const QQmlPrivate::CachedQmlUnit unit = {
+        reinterpret_cast<const QV4::CompiledData::Unit*>(&qmlData), &aotBuiltFunctions[0], nullptr
+    };
+}
+namespace _integrals_splash_qml { 
+    extern const unsigned char qmlData[];
+    extern const QQmlPrivate::AOTCompiledFunction aotBuiltFunctions[];
+    const QQmlPrivate::CachedQmlUnit unit = {
+        reinterpret_cast<const QV4::CompiledData::Unit*>(&qmlData), &aotBuiltFunctions[0], nullptr
+    };
+}
 
 }
 namespace {
@@ -25,6 +39,8 @@ Q_GLOBAL_STATIC(Registry, unitRegistry)
 
 Registry::Registry() {
         resourcePathToCachedUnit.insert(QStringLiteral("/integrals/main.qml"), &QmlCacheGeneratedCode::_integrals_main_qml::unit);
+        resourcePathToCachedUnit.insert(QStringLiteral("/integrals/auth.qml"), &QmlCacheGeneratedCode::_integrals_auth_qml::unit);
+        resourcePathToCachedUnit.insert(QStringLiteral("/integrals/splash.qml"), &QmlCacheGeneratedCode::_integrals_splash_qml::unit);
     QQmlPrivate::RegisterQmlUnitCacheHook registration;
     registration.structVersion = 0;
     registration.lookupCachedQmlUnit = &lookupCachedUnit;

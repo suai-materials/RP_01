@@ -1,0 +1,17 @@
+{
+    "classes": [
+        {
+            "className": "SplashScreen",
+            "object": true,
+            "qualifiedClassName": "SplashScreen",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "splashscreen.h",
+    "outputRevision": 68
+}

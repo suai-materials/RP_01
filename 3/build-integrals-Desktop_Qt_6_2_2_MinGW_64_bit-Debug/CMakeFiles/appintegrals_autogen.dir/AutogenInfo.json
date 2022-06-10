@@ -1,16 +1,16 @@
 {
-	"BUILD_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen",
-	"CMAKE_BINARY_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/user/Desktop/_ПР_01/3/integrals",
+	"BUILD_DIR" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/user/Desktop/_PR_01/3/integrals",
 	"CMAKE_EXECUTABLE" : "C:/Qt/Tools/CMake_64/bin/cmake.exe",
 	"CMAKE_LIST_FILES" : 
 	[
-		"C:/Users/user/Desktop/_ПР_01/3/integrals/CMakeLists.txt",
+		"C:/Users/user/Desktop/_PR_01/3/integrals/CMakeLists.txt",
 		"C:/Qt/Tools/QtCreator/share/qtcreator/package-manager/auto-setup.cmake",
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/3.21.1/CMakeSystem.cmake",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/3.21.1/CMakeSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake",
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/3.21.1/CMakeCXXCompiler.cmake",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/3.21.1/CMakeCXXCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeGenericSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake",
@@ -23,7 +23,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/Platform/Windows-GNU-CXX.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/Platform/Windows-GNU.cmake",
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/3.21.1/CMakeRCCompiler.cmake",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/3.21.1/CMakeRCCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeRCInformation.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/Platform/Windows-windres.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/Platform/Windows-GNU-CXX-ABI.cmake",
@@ -355,15 +355,15 @@
 		"C:/Qt/6.2.2/mingw_64/lib/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in",
 		"C:/Qt/6.2.2/mingw_64/lib/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in",
 		"C:/Qt/6.2.2/mingw_64/lib/cmake/Qt6Qml/Qt6qmldirTemplate.cmake.in",
-		"C:/Users/user/Desktop/_ПР_01/3/integrals/resources.qrc"
+		"C:/Users/user/Desktop/_PR_01/3/integrals/resources.qrc"
 	],
-	"CMAKE_SOURCE_DIR" : "C:/Users/user/Desktop/_ПР_01/3/integrals",
-	"DEP_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/deps",
+	"CMAKE_SOURCE_DIR" : "C:/Users/user/Desktop/_PR_01/3/integrals",
+	"DEP_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "appintegrals_autogen/timestamp",
 	"HEADERS" : [],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/include",
-	"MOC_COMPILATION_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"MINGW_HAS_SECURE_API=1",
@@ -392,7 +392,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"C:/Users/user/Desktop/_ПР_01/3/integrals",
+		"C:/Users/user/Desktop/_PR_01/3/integrals",
 		"C:/Qt/6.2.2/mingw_64/include/QtQml/6.2.2",
 		"C:/Qt/6.2.2/mingw_64/include/QtQml/6.2.2/QtQml",
 		"C:/Qt/6.2.2/mingw_64/include/QtCore/6.2.2",
@@ -424,31 +424,33 @@
 		"-c",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_main_qml.cpp",
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qrc_appintegrals_raw_qml_0.cpp",
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qrc_qmake_integrals.cpp",
-		"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_qmltyperegistrations.cpp"
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_auth_qml.cpp",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_main_qml.cpp",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_splash_qml.cpp",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qrc_appintegrals_raw_qml_0.cpp",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qrc_qmake_integrals.cpp",
+		"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_qmltyperegistrations.cpp"
 	],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 4,
-	"PARSE_CACHE_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "C:/Qt/6.2.2/mingw_64/./bin/moc.exe",
 	"QT_UIC_EXECUTABLE" : "",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 2,
-	"SETTINGS_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
-			"C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_qmlcache_loader.cpp",
+			"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_qmlcache_loader.cpp",
 			"Mu",
 			null
 		],
-		[ "C:/Users/user/Desktop/_ПР_01/3/integrals/main.cpp", "Mu", null ]
+		[ "C:/Users/user/Desktop/_PR_01/3/integrals/main.cpp", "Mu", null ]
 	],
 	"VERBOSITY" : 0
 }

@@ -17,7 +17,7 @@ qt_add_executable(appintegrals
 qt_add_qml_module(appintegrals
     URI integrals
     VERSION 1.0
-    QML_FILES main.qml
+    QML_FILES main.qml auth.qml splash.qml
 )
 
 set_target_properties(appintegrals PROPERTIES

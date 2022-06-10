@@ -1,0 +1,23 @@
+{
+	"BUILD_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/user/Desktop/_ПР_01/3/integrals",
+	"CMAKE_SOURCE_DIR" : "C:/Users/user/Desktop/_ПР_01/3/integrals",
+	"INCLUDE_DIR" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/include",
+	"INPUTS" : 
+	[
+		"C:/Users/user/Desktop/_ПР_01/3/integrals/main.qml",
+		"C:/Users/user/Desktop/_ПР_01/3/integrals/res/logo.png"
+	],
+	"LOCK_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/AutoRcc_resources_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "C:/Qt/6.2.2/mingw_64/./bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "C:/Users/user/Desktop/_ПР_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/AutoRcc_resources_EWIEGA46WW_Used.txt",
+	"SOURCE" : "C:/Users/user/Desktop/_ПР_01/3/integrals/resources.qrc",
+	"VERBOSITY" : 0
+}
