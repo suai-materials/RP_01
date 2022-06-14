@@ -19,7 +19,6 @@ QQmlComponent *LoaderManager::getFrame(QObject *parent) {
     if (engine){
         //this->parent = parent;
         loader = parent->findChild<QObject *>("pageLoader");
-
     }
     return new QQmlComponent(engine, QUrl("qrc:/splash.qml"));;
 }
