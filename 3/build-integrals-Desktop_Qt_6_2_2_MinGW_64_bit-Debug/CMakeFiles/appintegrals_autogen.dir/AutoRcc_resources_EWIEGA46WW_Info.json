@@ -7,7 +7,9 @@
 	"INCLUDE_DIR" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/include",
 	"INPUTS" : 
 	[
+		"C:/Users/user/Desktop/_PR_01/3/integrals/splash.qml",
 		"C:/Users/user/Desktop/_PR_01/3/integrals/main.qml",
+		"C:/Users/user/Desktop/_PR_01/3/integrals/auth.qml",
 		"C:/Users/user/Desktop/_PR_01/3/integrals/res/logo.png"
 	],
 	"LOCK_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/appintegrals_autogen.dir/AutoRcc_resources_EWIEGA46WW_Lock.lock",

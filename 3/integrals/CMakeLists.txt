@@ -11,6 +11,7 @@ find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
 
 qt_add_executable(appintegrals
     resources.qrc
+    loadermanager.h loadermanager.cpp
     main.cpp
 )
 

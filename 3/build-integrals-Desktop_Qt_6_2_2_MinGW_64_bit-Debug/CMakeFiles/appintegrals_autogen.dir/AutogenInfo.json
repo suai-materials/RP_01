@@ -360,7 +360,15 @@
 	"CMAKE_SOURCE_DIR" : "C:/Users/user/Desktop/_PR_01/3/integrals",
 	"DEP_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "appintegrals_autogen/timestamp",
-	"HEADERS" : [],
+	"HEADERS" : 
+	[
+		[
+			"C:/Users/user/Desktop/_PR_01/3/integrals/loadermanager.h",
+			"Mu",
+			"EWIEGA46WW/moc_loadermanager.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/include",
 	"MOC_COMPILATION_FILE" : "C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/appintegrals_autogen/mocs_compilation.cpp",
@@ -447,6 +455,11 @@
 	[
 		[
 			"C:/Users/user/Desktop/_PR_01/3/build-integrals-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/.rcc/qmlcache/appintegrals_qmlcache_loader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"C:/Users/user/Desktop/_PR_01/3/integrals/loadermanager.cpp",
 			"Mu",
 			null
 		],

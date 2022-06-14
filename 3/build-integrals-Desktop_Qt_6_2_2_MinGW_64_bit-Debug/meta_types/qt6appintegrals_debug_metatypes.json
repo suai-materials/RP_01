@@ -1,2 +1,32 @@
 [
+    {
+        "classes": [
+            {
+                "className": "LoaderManager",
+                "methods": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "parent",
+                                "type": "QObject*"
+                            }
+                        ],
+                        "name": "getFrame",
+                        "returnType": "QQmlComponent*"
+                    }
+                ],
+                "object": true,
+                "qualifiedClassName": "LoaderManager",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "loadermanager.h",
+        "outputRevision": 68
+    }
 ]

@@ -3,7 +3,16 @@
 
 #include <QLocale>
 #include <QTranslator>
-#include <splashscreen.h>
+#include <QObject>
+#include <loadermanager.h>
+
+static QObject *qobject_singletontype_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
+    static LoaderManager *loaderManager = new LoaderManager();
+    return loaderManager;
+}
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +27,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-
+    qmlRegisterSingletonType<LoaderManager>("com.integrals.api", 1, 0, "LoaderManager", &qobject_singletontype_provider);
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/integrals/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
