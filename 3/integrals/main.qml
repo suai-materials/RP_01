@@ -19,21 +19,9 @@ ApplicationWindow {
     Loader{
         anchors.centerIn: parent
         objectName: "pageLoader"
-        // anchors.fill: parent
         id: pageLoader
+        /* getFrame вызывает код из C++, выдавая нам в C++ необходимые объекты
+        для взаимодействия с loader из кода */
         sourceComponent: LoaderManager.getFrame(appWindow)
     }
-// Хорошая идея, но нельзя , так нельзя
-//    Component.onCompleted: {
-//        var http = new XMLHttpRequest()
-//        var url = "http://phhask.pank.su"
-//        http.open("GET", url, true)
-//        http.onreadystatechange = function(){
-//             console.log(http.status)
-//             if (http.readyState == 4 && http.status == 200){
-//                pageLoader.source = "auth.qml"
-//             }
-//        }
-//        http.send()
-//    }
 }

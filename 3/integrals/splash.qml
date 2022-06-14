@@ -5,7 +5,6 @@ import QtQuick.Layouts
 
 ColumnLayout{
     anchors.centerIn: parent
-    spacing: 0
     Rectangle{
         Layout.alignment: Qt.AlignHCenter
         width: 196
