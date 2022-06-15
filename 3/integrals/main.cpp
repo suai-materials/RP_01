@@ -4,6 +4,8 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QObject>
+#include <QtWebEngine/qtwebengineglobal.h>
+
 #include <loadermanager.h>
 
 static QObject *qobject_singletontype_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
@@ -28,6 +30,7 @@ int main(int argc, char *argv[])
         }
     }
     qmlRegisterSingletonType<LoaderManager>("com.integrals.api", 1, 0, "LoaderManager", &qobject_singletontype_provider);
+    QtWebEngine::initialize();
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/integrals/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -35,6 +35,7 @@ void LoaderManager::replyFinished(QNetworkReply *reply){
         std::this_thread::sleep_for(std::chrono::seconds(1));
         changeScreen(Auth);
     }
+    changeScreen(Auth);
 }
 
 // меняем источник loader для смены текущего frame
