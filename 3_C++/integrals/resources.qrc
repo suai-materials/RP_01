@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/drawable">
+        <file alias="logo.png">res/logo.png</file>
+        <file alias="sticker.png">res/sticker.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>splash.qml</file>
+        <file>auth.qml</file>
+    </qresource>
+</RCC>

@@ -27,10 +27,14 @@ ApplicationWindow {
         WebEngine.defaultProfile.persistentCookiesPolicy = WebEngineProfile.AllowPersistentCookies
     }
 
+    LoaderManager{
+        id: loaderManager
+    }
+
     header: ToolBar {
         id: toolbar
         Material.foreground: "#ffffff"
-        visible: true
+        visible: loaderManager.nav_visibility
         RowLayout {
             anchors.fill: parent
             ToolButton {
@@ -54,15 +58,12 @@ ApplicationWindow {
         id: drawer
         width: 0.33 * appWindow.width
         height: appWindow.height
+        interactive: nav_visibility
 
         Label {
             text: "Content goes here!"
             anchors.centerIn: parent
         }
-    }
-
-    LoaderManager{
-        id: loaderManager
     }
 
     Loader{

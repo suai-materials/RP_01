@@ -1,0 +1,4 @@
+module integrals
+typeinfo appintegrals.qmltypes
+prefer :/integrals/
+
