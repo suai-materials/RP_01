@@ -1,9 +1,11 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
-import io.integrals.LoaderManager 1.0
+import QtQml 2.15
 import QtWebEngine 1.10
+import io.integrals.LoaderManager 1.0
+
 
 
 ApplicationWindow {
@@ -14,9 +16,51 @@ ApplicationWindow {
     height: 633
     visible: true
     Material.theme: Material.System
-    Material.primary: "#C5CAE9"
+    Material.primary: "#9499B7"
     Material.background: "#C5CAE9"
     title: qsTr("integrals.pank.su")
+    Component.onCompleted: {
+        WebEngine.settings.pluginsEnabled = true
+        WebEngine.settings.javascriptEnabled = true
+        WebEngine.settings.showScrollBars = false
+        WebEngine.settings.allowRunningInsecureContent = true
+        WebEngine.defaultProfile.persistentCookiesPolicy = WebEngineProfile.AllowPersistentCookies
+    }
+
+    header: ToolBar {
+        id: toolbar
+        Material.foreground: "#ffffff"
+        visible: true
+        RowLayout {
+            anchors.fill: parent
+            ToolButton {
+                icon.source: "qrc:/drawable/nav_btn.svg"
+                icon.color: "#ffffff"
+                onClicked:{
+                    drawer.visible = true
+                }
+            }
+            Label {
+                text: "Темы"
+                font.pixelSize: 32
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                Layout.fillWidth: true
+                Layout.rightMargin: 44
+            }
+        }
+    }
+    Drawer {
+        id: drawer
+        width: 0.33 * appWindow.width
+        height: appWindow.height
+
+        Label {
+            text: "Content goes here!"
+            anchors.centerIn: parent
+        }
+    }
+
     LoaderManager{
         id: loaderManager
     }
@@ -30,25 +74,5 @@ ApplicationWindow {
         для взаимодействия с loader из кода */
         // sourceComponent: LoaderManager.getFrame()
     }
-    ColumnLayout {
-        anchors.centerIn: parent
-        visible: loaderManager.auth_visible
-        Image{
-            Layout.preferredWidth: 224
-            Layout.preferredHeight: 213
-            source: "./res/sticker.png"
-        }
-        property WebEngineView webView: webView_
-        WebEngineView{
-            id: webView_
-            Layout.preferredWidth: 260
-            Layout.preferredHeight: 60
-            backgroundColor: "transparent"
-            url: "http://integrals.pank.su"
-//            onNewWindowRequested: function(request) {
-//                var newWindow = parent.createObject(appWindow);
-//                newWindow.webView.acceptAsNewWindow(request);
-//            }
-        }
-    }
+
 }

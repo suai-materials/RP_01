@@ -1,7 +1,10 @@
 <RCC>
     <qresource prefix="/drawable">
-        <file alias="logo.png">/res/logo.png</file>
-        <file alias="sticker.png">/res/sticker.png</file>
+        <file alias="logo.png">res/logo.png</file>
+        <file alias="sticker.png">res/sticker.png</file>
+        <file alias="telegram_auth.png">res/telegram_auth.png</file>
+        <file alias="wifi_off.png">res/wifi_off.png</file>
+        <file alias="nav_btn.svg">res/nav_btn.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>main.qml</file>
