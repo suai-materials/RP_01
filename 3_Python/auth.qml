@@ -4,8 +4,6 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 ColumnLayout {
-        anchors.centerIn: parent
-
         Image{
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 224
