@@ -1,0 +1,8 @@
+### Send POST request with json body
+POST http://127.0.0.1:25565/check_auth
+Content-Type: application/json
+
+{
+  "session_id": 0,
+  "secret_key": "47f72fb7551029250e10690087bd6de7d3c65273e3db3c3eba07a531e6ba9389"
+}
