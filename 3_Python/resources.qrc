@@ -5,6 +5,8 @@
         <file alias="telegram_auth.png">res/telegram_auth.png</file>
         <file alias="wifi_off.png">res/wifi_off.png</file>
         <file alias="nav_btn.svg">res/nav_btn.svg</file>
+        <file alias="navigate_next.svg">res/navigate_next.svg</file>
+        <file alias="navigate_next_r.svg">res/navigate_next_r.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>main.qml</file>

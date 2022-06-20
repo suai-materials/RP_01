@@ -2,12 +2,13 @@ import QtQuick 2.0
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
-
+Item{
 ColumnLayout{
+    anchors.centerIn: parent
     Rectangle{
         Layout.alignment: Qt.AlignHCenter
-        width: 196
-        height: 196
+        Layout.preferredWidth: 196
+        Layout.preferredHeight: 196
         radius: 24
         Material.background: "#ffffff"
         Image{
@@ -36,4 +37,6 @@ ColumnLayout{
         }
     }
 }
+}
+
 

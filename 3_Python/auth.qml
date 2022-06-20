@@ -3,7 +3,9 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
+Item{
 ColumnLayout {
+        anchors.centerIn: parent
         Image{
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 224
@@ -41,4 +43,5 @@ ColumnLayout {
             Material.background: "#FFF7FF"
             radius: 24
         }
+}
 }

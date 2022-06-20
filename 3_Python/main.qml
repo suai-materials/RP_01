@@ -10,6 +10,7 @@ import io.integrals.LoaderManager 1.0
 
 ApplicationWindow {
     id: appWindow
+    // flags: Qt.FramelessWindowHint
     minimumWidth: 700
     minimumHeight: 500
     width: 1000
@@ -22,7 +23,7 @@ ApplicationWindow {
     Component.onCompleted: {
         WebEngine.settings.pluginsEnabled = true
         WebEngine.settings.javascriptEnabled = true
-        WebEngine.settings.showScrollBars = false
+        // WebEngine.settings.showScrollBars = false
         WebEngine.settings.allowRunningInsecureContent = true
         WebEngine.defaultProfile.persistentCookiesPolicy = WebEngineProfile.AllowPersistentCookies
     }
@@ -34,7 +35,8 @@ ApplicationWindow {
     header: ToolBar {
         id: toolbar
         Material.foreground: "#ffffff"
-        visible: loaderManager.nav_visibility
+        // visible: loaderManager.nav_visibility
+        visible: true
         RowLayout {
             anchors.fill: parent
             ToolButton {
@@ -58,19 +60,22 @@ ApplicationWindow {
         id: drawer
         width: 0.33 * appWindow.width
         height: appWindow.height
-        interactive: nav_visibility
+        interactive: true
+        // interactive: loaderManager.nav_visibility
 
         Label {
             text: "Content goes here!"
             anchors.centerIn: parent
+
         }
     }
 
     Loader{
+        anchors.fill: parent
         anchors.centerIn: parent
         objectName: "pageLoader"
         id: pageLoader
-        source: "themes.qml"
+        source: "topic.qml"
         /* getFrame вызывает код из C++, выдавая нам в C++ необходимые объекты
         для взаимодействия с loader из кода */
         // sourceComponent: LoaderManager.getFrame()
