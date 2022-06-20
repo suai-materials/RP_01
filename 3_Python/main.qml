@@ -75,7 +75,7 @@ ApplicationWindow {
         anchors.centerIn: parent
         objectName: "pageLoader"
         id: pageLoader
-        source: "tests.qml"
+        source: "topics.qml"
         /* getFrame вызывает код из C++, выдавая нам в C++ необходимые объекты
         для взаимодействия с loader из кода */
         // sourceComponent: LoaderManager.getFrame()
