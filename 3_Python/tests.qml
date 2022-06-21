@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import QtQml 2.15
-import models
+import "models"
 
 Item{
     ListView {
@@ -25,19 +25,24 @@ Item{
                 width: listView.contentWidth - anchors.leftMargin - 20
                 Row {
                     anchors.fill: parent
+                    anchors.leftMargin: 10
                     height: 48
                     id: row
                     Image{
+                        id: run_test
                         anchors.verticalCenter: parent.verticalCenter
-                        width: 40
-                        height: 40
-                        source: "qrc:/drawable/test_icon.svg"
+                        width: 35
+                        height: 35
+                        source: type !== "topic" ? "qrc:/drawable/test_icon.png" : "qrc:/drawable/topics_icon.svg"
                     }
                     Text {
                         text: name
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: run_test.right
+                        anchors.leftMargin: 10
                         color: "#9499B7"
                         font.family: "Roboto"
+                        font.weight: Font.Medium
                         font.pixelSize: 20
                     }
 

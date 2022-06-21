@@ -1,45 +1,56 @@
-{
-  "name": "Тренировачный тест",
-  "test_id": -1000,
-  "topic_id": -1000,
-  "attempts": 1000,
-  "question_count": 5,
-  "questions": [
-    {
-      "question_type": "one_answer",
-      "text": "Сколько будет 10 * 5?",
-      "answers": ["50", "10", "21", "39"],
-      "correct": "50"
-    },
-    {
-      "question_type": "generate",
-      "varibales": [
-        {
-          "name": "one",
-          "type": "int",
-          "interval": [1, 10]
-        },
-        {
-          "name": "two",
-          "type": "int",
-          "interval": [1, 5]
-        }
-      ],
-      "text": "Сколько будет {{one}} * {{two}}?",
-      "correct": "{{one}} * {{two}}"
-    },
-    {
-      "question_type": "entering",
-
-      "text": "15 - это _____(не цифра)",
-      "correct": "число"
-    },
-    {
-      "question_type": "multiple_answers",
-
-      "text": "Как можно получить число 1?",
-      "answers": ["1 * 1", "1 ^ 1", "2 * 0.5", "5 * 5"],
-      "correct": ["1 * 1", "1 ^ 1", "2 * 0.5"]
-    }
-  ]
-}
+[
+  {
+    "question_type": "one_answer",
+    "text": "Сколько будет 10 * 5?",
+    "answers": [
+      "50",
+      "10",
+      "21",
+      "39"
+    ],
+    "correct": "50"
+  },
+  {
+    "question_type": "generate",
+    "varibales": [
+      {
+        "name": "one",
+        "type": "int",
+        "interval": [
+          1,
+          10
+        ]
+      },
+      {
+        "name": "two",
+        "type": "int",
+        "interval": [
+          1,
+          5
+        ]
+      }
+    ],
+    "text": "Сколько будет {{one}} * {{two}}?",
+    "correct": "{{one}} * {{two}}"
+  },
+  {
+    "question_type": "entering",
+    "text": "15 - это _____(не цифра)",
+    "correct": "число"
+  },
+  {
+    "question_type": "multiple_answers",
+    "text": "Как можно получить число 1?",
+    "answers": [
+      "1 * 1",
+      "1 ^ 1",
+      "2 * 0.5",
+      "5 * 5"
+    ],
+    "correct": [
+      "1 * 1",
+      "1 ^ 1",
+      "2 * 0.5"
+    ]
+  }
+]
