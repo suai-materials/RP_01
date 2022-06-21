@@ -32,7 +32,8 @@ def check_auth():
         user_id = user_id[0][0]
         if user_id == None:
             return "wait"
-        token = str(hashlib.sha256((str(datetime.datetime.now()) + BOT_TOKEN).encode()).hexdigest())
+        token = str(hashlib.sha256(
+            (str(datetime.datetime.now()) + BOT_TOKEN + str(user_id)).encode()).hexdigest())
         cursor.execute(
             f'''UPDATE tables.users SET token = '{token}' WHERE id = {user_id}''')
         conn.commit()
@@ -41,17 +42,18 @@ def check_auth():
         return "data invalid", 401
 
 
-
 @app.route("/get_session_id")
 def get_session_id():
     cursor = conn.cursor()
     cursor.execute(f"SELECT id FROM tables.session WHERE ip = '{request.remote_addr}'")
     session_id = cursor.fetchall()
-    secret_key = str(hashlib.sha256(str(datetime.datetime.now()).encode()).hexdigest())
+    secret_key = str(
+        hashlib.sha256((str(datetime.datetime.now()) + str(session_id)).encode()).hexdigest())
     if len(session_id) != 0:
         session_id = session_id[0][0]
         cursor.execute(
-            f'''UPDATE tables.session SET secret_key = '{secret_key}' WHERE id = {session_id}''')
+            f'''UPDATE tables.session SET secret_key = '{secret_key}', 
+            user_id = null WHERE id = {session_id}''')
         conn.commit()
         cursor.close()
         return {"session_id": session_id, "secret_key": secret_key}
@@ -80,31 +82,40 @@ def check_auth_data():
                 key != "hash" and key != "session_id"]))
     # print(auth_data, request.args.to_dict()["hash"])
     SECRET_KEY = hashlib.sha256(BOT_TOKEN.encode('utf-8'))
+    print(hmac.new(SECRET_KEY.digest(), msg=bytearray(auth_data, 'utf-8'),
+                   digestmod=hashlib.sha256).hexdigest())
     if (hmac.new(SECRET_KEY.digest(), msg=bytearray(auth_data, 'utf-8'),
                  digestmod=hashlib.sha256).hexdigest() == auth_data_dict["hash"]):
         auth_data_dict.pop("hash")
         cursor = conn.cursor()
         cursor.execute(f"SELECT id FROM tables.session WHERE id = {auth_data_dict['session_id']}")
         if len(cursor.fetchall()) == 0:
+            cursor.close()
             return "Попробуйте снова перейти по ссылке в приложении"
         cursor.execute(f"SELECT id FROM tables.users WHERE id = {auth_data_dict['id']}")
         if len(cursor.fetchall()) == 0:
             print(auth_data_dict)
             cursor.execute(
-                f'''INSERT INTO tables.users({", ".join(auth_data_dict.keys())}) VALUES ({", ".join([value if "id" in key or key == "auth_date" else f"""'{value}'""" for key, value in auth_data_dict.items()])})''')
+                f'''INSERT INTO tables.users({", ".join(auth_data_dict.keys())}) VALUES ({", ".join([repr(value) for key, value in auth_data_dict.items()])})''')
             cursor.execute(
-                f'UPDATE tables.session SET is_auth = true, user_id = {auth_data_dict["id"]} WHERE id = {auth_data_dict["session_id"]}')
+                f'UPDATE tables.session SET user_id = {auth_data_dict["id"]} WHERE id = {auth_data_dict["session_id"]}')
             conn.commit()
+            cursor.close()
             return f"Вы успешно зарегестрированы"
         else:
             cursor.execute(
-                f'UPDATE tables.users SET auth_date = {auth_data_dict["auth_date"]}, session_id = {auth_data_dict["session_id"]} WHERE id = {auth_data_dict["id"]}')
+                f'''UPDATE tables.users SET 
+                {", ".join([f"{key}={repr(data)}" for key, data in auth_data_dict.items()
+                            if key != "id"])} 
+                WHERE id = {auth_data_dict["id"]}''')
             cursor.execute(
-                f'UPDATE tables.session SET is_auth = true, user_id = {auth_data_dict["id"]} WHERE id = {auth_data_dict["session_id"]}')
+                f'UPDATE tables.session SET user_id = {auth_data_dict["id"]} WHERE id = {auth_data_dict["session_id"]}')
             conn.commit()
+            cursor.close()
             return f"Вы успешно вошли"
     else:
-        return "Telegram передал нам плохие данные, попробуйте снова пройти операцию авторизации через приложение"
+        return "Telegram передал нам плохие данные, попробуйте снова " \
+               "пройти операцию, авторизации через приложение"
 
 
 # @app.route('/tauth/<int:session_id>')
