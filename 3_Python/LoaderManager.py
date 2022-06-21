@@ -115,7 +115,7 @@ class LoaderManager(QObject):
 def check_connection(loader_manager: LoaderManager):
     try:
         sleep(1.6)
-        response = requests.get(SERVER_URL + "get_session_id")
+        response = requests.get(SERVER_URL + "session_id")
         if response.status_code == 200:
             loader_manager.frame_now = "auth.qml"
             loader_manager.session_id = response.json()["session_id"]

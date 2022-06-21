@@ -2,10 +2,10 @@ import datetime
 import hashlib
 import hmac
 import json
+from random import sample
 
 import psycopg2
 from flask import Flask, request, render_template
-from random import sample
 
 BOT_TOKEN = ""
 conn = psycopg2.connect(dbname='integrals', user='postgres',
@@ -47,12 +47,49 @@ def check_auth():
 
 
 @app.route("/test/<int:test_id>")
-def test(test_id: int):
+def start_test(test_id: int):
     cursor = conn.cursor()
     cursor.execute(f"""SELECT * FROM tables.test WHERE id = {test_id}""")
     test = cursor.fetchall()[0]
-    print(test)
-    return render_template("test.html", name=test[1], test_data=sample(test[2], test[5]), sample=sample, len=len)
+    cursor.close()
+    return render_template("test.html", name=test[1], test_data=sample(test[2], test[5]),
+                           sample=sample, len=len)
+
+
+@app.route("/tests")
+def tests():
+    result = []
+    cursor = conn.cursor()
+    cursor.execute("""SELECT id, topic_name, tests  FROM tables.topic""")
+    for topic_info in cursor:
+        result.append({
+            "type": "topic",
+            "topic_id": topic_info[0],
+            "name": topic_info[1]
+        })
+        for test_id in topic_info[2]:
+            cursor.execute(f"""SELECT test_name FROM tables.test WHERE id = {test_id}""")
+            result.append({
+                "type": "topicTest",
+                "test_id": test_id,
+                "name": cursor.fetchall()[0][0]
+            })
+    return json.dumps(result)
+
+
+@app.route("/topics")
+def topics():
+    result = []
+    cursor = conn.cursor()
+    cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic""")
+    for topic_info in cursor:
+        result.append({
+            "topic_id": topic_info[0],
+            "name": topic_info[1],
+            "icon": topic_info[2]
+        })
+    return json.dumps(result)
+
 
 @app.route("/session_id")
 def session_id():
@@ -111,6 +148,8 @@ def check_auth_data():
                 f'''INSERT INTO tables.users({", ".join(auth_data_dict.keys())}) VALUES ({", ".join([repr(value) for key, value in auth_data_dict.items()])})''')
             cursor.execute(
                 f'UPDATE tables.session SET user_id = {auth_data_dict["id"]} WHERE id = {auth_data_dict["session_id"]}')
+            cursor.execute(
+                f'''INSERT INTO tables.user_stats(user_id) VALUES ({auth_data_dict["id"]})''')
             conn.commit()
             cursor.close()
             return f"Вы успешно зарегестрированы"
