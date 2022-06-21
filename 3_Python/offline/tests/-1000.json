@@ -11,29 +11,6 @@
     "correct": "50"
   },
   {
-    "question_type": "generate",
-    "varibales": [
-      {
-        "name": "one",
-        "type": "int",
-        "interval": [
-          1,
-          10
-        ]
-      },
-      {
-        "name": "two",
-        "type": "int",
-        "interval": [
-          1,
-          5
-        ]
-      }
-    ],
-    "text": "Сколько будет {{one}} * {{two}}?",
-    "correct": "{{one}} * {{two}}"
-  },
-  {
     "question_type": "entering",
     "text": "15 - это _____(не цифра)",
     "correct": "число"

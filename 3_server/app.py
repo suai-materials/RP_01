@@ -1,9 +1,11 @@
 import datetime
 import hashlib
 import hmac
+import json
 
 import psycopg2
-from flask import Flask, request
+from flask import Flask, request, render_template
+from random import sample
 
 BOT_TOKEN = ""
 conn = psycopg2.connect(dbname='integrals', user='postgres',
@@ -37,13 +39,23 @@ def check_auth():
         cursor.execute(
             f'''UPDATE tables.users SET token = '{token}' WHERE id = {user_id}''')
         conn.commit()
+        cursor.close()
         return token
     else:
+        cursor.close()
         return "data invalid", 401
 
 
-@app.route("/get_session_id")
-def get_session_id():
+@app.route("/test/<int:test_id>")
+def test(test_id: int):
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT * FROM tables.test WHERE id = {test_id}""")
+    test = cursor.fetchall()[0]
+    print(test)
+    return render_template("test.html", name=test[1], test_data=sample(test[2], test[5]), sample=sample, len=len)
+
+@app.route("/session_id")
+def session_id():
     cursor = conn.cursor()
     cursor.execute(f"SELECT id FROM tables.session WHERE ip = '{request.remote_addr}'")
     session_id = cursor.fetchall()
