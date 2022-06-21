@@ -24,6 +24,7 @@ class LoaderManager(QObject):
     nav_visibility_changed = Signal(bool)
     session_id_changed = Signal(int)
     mode_changed = Signal(str)
+    header_changed = Signal(str)
     secret_key = ""
     token = ""
 
@@ -32,10 +33,18 @@ class LoaderManager(QObject):
     _mode: Mode = Mode.Online
     _frame_now = "splash.qml"
     _nav_visibility = False
+    _header = "Темы"
 
     def __init__(self, parent=None):
         super().__init__(parent)
         threading.Thread(target=check_connection, args=(self,)).start()
+
+    @Slot(QObject, str, str)
+    def open_topic(self, loader: QObject, url: str, name: str):
+        print(url)
+        loader.setProperty("url", url)
+        self.header = name
+        self.frame_now = "topic.qml"
 
     def get_frame_now(self):
         return self._frame_now
@@ -82,6 +91,14 @@ class LoaderManager(QObject):
         print(mode_str)
         self.mode_changed.emit(mode_str)
 
+    def get_header(self):
+        return self._header
+
+    @Slot(str)
+    def set_header(self, header):
+        self._header = header
+        self.header_changed.emit(header)
+
     # Свойства нашего qml-компонента, по которым мы можем обращаться в qml, тем самым выполняя
     # нужный код
     frame_now = Property(str, get_frame_now, set_frame_now, notify=frame_changed)
@@ -91,6 +108,8 @@ class LoaderManager(QObject):
                           notify=session_id_changed)
     mode = Property(str, get_mode, set_mode,
                     notify=mode_changed)
+    header = Property(str, get_header, set_header,
+                    notify=header_changed)
 
 
 def check_connection(loader_manager: LoaderManager):
@@ -121,7 +140,7 @@ def check_auth(loader_manager: LoaderManager):
             response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
         loader_manager.token = response.text
         print(response.text)
-        # TODO: Сделать функцию получения json тем
+        # TODO: Сделать функцию получения json тем c сервера
         loader_manager.frame_now = "topics.qml"
     except requests.exceptions.ConnectionError:
         loader_manager.frame_now = "error.qml"

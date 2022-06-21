@@ -41,12 +41,21 @@ ApplicationWindow {
             ToolButton {
                 icon.source: "qrc:/drawable/nav_btn.svg"
                 icon.color: "#ffffff"
+                visible: loaderManager.frame_now != "topic.qml"
                 onClicked:{
                     drawer.visible = true
                 }
             }
+            ToolButton {
+                icon.source: "qrc:/drawable/navigate_next.svg"
+                icon.color: "#ffffff"
+                visible: loaderManager.frame_now == "topic.qml"
+                onClicked:{
+                    loaderManager.frame_now = "topics.qml"
+                }
+            }
             Label {
-                text: "Темы"
+                text: loaderManager.header
                 font.pixelSize: 32
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
@@ -59,7 +68,7 @@ ApplicationWindow {
         id: drawer
         width: 0.33 * appWindow.width
         height: appWindow.height
-        interactive: loaderManager.nav_visibility
+        interactive: loaderManager.nav_visibility && loaderManager.frame_now != "topic.qml"
 
         Label {
             text: "Content goes here!"
@@ -69,15 +78,13 @@ ApplicationWindow {
     }
 
     Loader{
+        property string url
         anchors.fill: parent
         anchors.centerIn: parent
         objectName: "pageLoader"
         id: pageLoader
         source: loaderManager.frame_now
         // source: "topics.qml"
-        /* getFrame вызывает код из C++, выдавая нам в C++ необходимые объекты
-        для взаимодействия с loader из кода */
-        // sourceComponent: LoaderManager.getFrame()
     }
 
 }
