@@ -7,12 +7,15 @@ ListModel {
         grade: 5
     }
     ListElement {
-        type: "topicTestRunnable"
+        type: "topicTest"
+        attempts: 1000
         name: "Тест 1"
+        grade: 0
     }
     ListElement {
         type: "topicTest"
         name: "Тест 2"
+        attempts: 0
         grade: 5
     }
     ListElement {

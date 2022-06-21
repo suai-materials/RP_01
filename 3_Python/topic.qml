@@ -7,7 +7,7 @@ import QtWebEngine 1.10
 
 WebEngineView{
     id: webView
-    url: "https://pank.su"
+    url: Qt.resolvedUrl(pageLoader.url)
     backgroundColor: "transparent"
 }
 

@@ -1,0 +1,13 @@
+[
+  {
+    "type": "topic",
+    "topic_id": -1000,
+    "name": "Введение"
+  },
+  {
+    "type": "topicTest",
+    "test_id": -1000,
+    "topic_id": -1000,
+    "name": "Тренировачный тест"
+  }
+]
