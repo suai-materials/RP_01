@@ -35,8 +35,7 @@ ApplicationWindow {
     header: ToolBar {
         id: toolbar
         Material.foreground: "#ffffff"
-        // visible: loaderManager.nav_visibility
-        visible: true
+        visible: loaderManager.nav_visibility
         RowLayout {
             anchors.fill: parent
             ToolButton {
@@ -60,8 +59,7 @@ ApplicationWindow {
         id: drawer
         width: 0.33 * appWindow.width
         height: appWindow.height
-        interactive: true
-        // interactive: loaderManager.nav_visibility
+        interactive: loaderManager.nav_visibility
 
         Label {
             text: "Content goes here!"
@@ -75,7 +73,8 @@ ApplicationWindow {
         anchors.centerIn: parent
         objectName: "pageLoader"
         id: pageLoader
-        source: "topics.qml"
+        source: loaderManager.frame_now
+        // source: "topics.qml"
         /* getFrame вызывает код из C++, выдавая нам в C++ необходимые объекты
         для взаимодействия с loader из кода */
         // sourceComponent: LoaderManager.getFrame()

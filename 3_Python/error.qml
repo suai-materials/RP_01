@@ -58,6 +58,10 @@ ColumnLayout {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
+            onClicked: {
+                loaderManager.mode = "Offline"
+                loaderManager.frame_now = "topics.qml"
+            }
             Material.background: "#FFF7FF"
             radius: 24
         }

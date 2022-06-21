@@ -21,7 +21,7 @@ ColumnLayout {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        Qt.openUrlExternally("http://integrals.pank.su") // Добавить SessionID
+                        Qt.openUrlExternally("http://integrals.pank.su/?session=" + loaderManager.session_id) // Добавить SessionID
                    }
                 }
         }
@@ -39,6 +39,10 @@ ColumnLayout {
                 font.weight: Font.Medium
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+            }
+            onClicked: {
+                loaderManager.mode = "Offline"
+                loaderManager.frame = "topics.qml"
             }
             Material.background: "#FFF7FF"
             radius: 24

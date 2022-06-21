@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQml 2.15
+import "models"
 // import "qrc:/items/"
 Item{
 GridView {
@@ -9,9 +10,9 @@ GridView {
     anchors.leftMargin: 20
     anchors.topMargin: 10
     anchors.fill: parent
-    cellWidth: width / 4
+    cellWidth: width / Math.floor(width / 200)
     cellHeight: cellWidth + grid.cellWidth * 0.1
-    model: TopicModel {}
+    model: TopicModel{}
     ScrollBar.vertical: ScrollBar {
         visible: true
     }
@@ -31,7 +32,7 @@ GridView {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Text {
-                text: name
+                text: topic_id + " " + name
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "#9499B7"
                 font.family: "Roboto"
