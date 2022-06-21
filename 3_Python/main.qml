@@ -83,8 +83,8 @@ ApplicationWindow {
         anchors.centerIn: parent
         objectName: "pageLoader"
         id: pageLoader
-        source: loaderManager.frame_now
-        // source: "topics.qml"
+        // source: loaderManager.frame_now
+        source: "generator.qml"
     }
 
 }
