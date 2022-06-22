@@ -13,9 +13,6 @@
           processEscapes: true
         }
       });
-
-
-
     </script>
 
     <script type="text/javascript"
@@ -24,18 +21,24 @@
     <title>{{ name }}</title>
 </head>
 <body>
+<p class="h1 m-3" >Ваша оценка: {{ grade }}</p>
 <form action="http://api.pank.su:25565/test_data/{{ user_id }}" method="post">
-    {# Надо перемешать вопросы, до вставки в шаблон #}
     {% for question in test_data %}
-        <p class="h3 m-3">{{ question["text"] }}</p>
+        <p class="h3 m-3" >{{ question["text"] }}</p>
         {% if question["question_type"] == "one_answer" %}
             <div class="m-3">
                 {% set question_number = loop.index %}
                 {% for answer in question["answers"] %}
                     <div class="form-check">
-                        <input class="form-check-input" value="{{ loop.index }}" type="radio"
-                               name="{{ question_number }}"
-                               id="{{ question_number }}.{{ loop.index }}" required>
+                        {% if loop.index | string == question["user_answer"] %}
+                            <input class="form-check-input" value="{{ loop.index }}" type="radio"
+                                   name="{{ question_number }}"
+                                   id="{{ question_number }}.{{ loop.index }}" checked disabled>
+                        {% else %}
+                            <input class="form-check-input" value="{{ loop.index }}" type="radio"
+                                   name="{{ question_number }}"
+                                   id="{{ question_number }}.{{ loop.index }}">
+                        {% endif %}
                         <label class="form-check-label" for="{{ question_number }}.{{ loop.index }}">
                             {{ answer }}
                         </label>
@@ -45,16 +48,23 @@
         {% elif question["question_type"] == "entering" %}
             <div class="m-3">
                 <input type="text" class="form-control" id="{{ loop.index }}" name="{{ loop.index }}"
-                       placeholder="Ответ:" required>
+                       placeholder="Ответ:" value="{{ question["user_answer"] }}" readonly>
             </div>
+
         {% elif question["question_type"] == "multiple_answers" %}
-            <div class="checkbox-group m-3">
+            <div class="m-3">
                 {% set question_number = loop.index %}
                 {% for answer in question["answers"] %}
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ loop.index }}"
+                        {% if loop.index | string in question["user_answer"]  %}
+                            <input class="form-check-input" type="checkbox" value="{{ loop.index }}"
                                name="{{ question_number }}"
-                               id="{{ question_number }}.{{ loop.index }}">
+                               id="{{ question_number }}.{{ loop.index }}" disabled checked>
+                        {% else %}
+                            <input class="form-check-input" type="checkbox" value="{{ loop.index }}"
+                                    name="{{ question_number }}"
+                                    id="{{ question_number }}.{{ loop.index }}" disabled>
+                        {% endif %}
                         <label class="form-check-label" for="{{ question_number }}.{{ loop.index }}">
                             {{ answer }}
                         </label>
@@ -62,9 +72,20 @@
                 {% endfor %}
             </div>
         {% endif %}
+        {% if question["is_correct"]%}
+            <div class="alert alert-success d-flex align-items-center m-3" role="alert">
+              <div>
+                  Верный ответ
+              </div>
+            </div>
+        {% else %}
+            <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+              <div>
+                  Неверный ответ
+              </div>
+            </div>
+        {% endif %}
     {% endfor %}
-    <button type="submit" onclick="$('div.checkbox-group.required :checkbox:checked').length > 0" class="btn m-3 btn-primary">Отправить
-    </button>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"

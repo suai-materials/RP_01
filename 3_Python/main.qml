@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.15
 import QtQml 2.15
 import QtWebEngine 1.10
 import QtGraphicalEffects 1.0
-import QtQuick.Dialogs 1.2
+import QtQuick.Dialogs 1.3
 import io.integrals.LoaderManager 1.0
 import "models"
 
@@ -39,9 +39,13 @@ ApplicationWindow {
         standardButtons: StandardButton.Yes | StandardButton.No
         Text{
             anchors.centerIn: parent
-            text: "Вы уверены, что вы хотите завершить тест и вернуться в меню их выбора?"
-        }
+            text: "Вы уверены, что вы хотите выйти из теста? \n Данные не будут отправлены и попытка потрачена не будет."
 
+        }
+        onYes:{
+            loaderManager.close_test()
+            loaderManager.frame_now = "tests.qml"
+        }
     }
 
     LoaderManager{
@@ -97,7 +101,7 @@ ApplicationWindow {
             }
             ToolButton {
                 Layout.alignment: Qt.AlignRight
-                icon.source: "qrc:/drawable/reload_icon.svg"
+                icon.source: "qrc:/drawable/close_icon.svg"
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "Test"
                 onClicked:{

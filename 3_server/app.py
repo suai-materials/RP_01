@@ -4,10 +4,12 @@ import hmac
 import json
 from random import sample
 
+from sympy import *
 import psycopg2
 from flask import Flask, request, render_template
 
-BOT_TOKEN = ""
+DOMAIN = "http://api.pank.su:25565/"
+BOT_TOKEN = "5472884845:AAGh_XXz2Dlrl2hIcrRF7cWqVqT1C4ZzQB8"
 conn = psycopg2.connect(dbname='integrals', user='postgres',
                         password='200tdhj', host='api.pank.su')
 # cursor = conn.cursor()
@@ -66,12 +68,12 @@ def start_test(test_id: int):
     cursor.execute(f"""SELECT * FROM tables.test WHERE id = {test_id}""")
     test = cursor.fetchall()[0]
     test_data = sample(test[2], test[5])
+    test_data[0]["test_id"] = test_id
     cursor.execute(f"""UPDATE tables.user_stats SET test_now = %s WHERE user_id = {user_id}""",
                    [json.dumps(test_data)])
     conn.commit()
     cursor.close()
-    return render_template("test.html", name=test[1], test_data=test_data,
-                           sample=sample, len=len)
+    return render_template("test.html", name=test[1], test_data=test_data, user_id=user_id)
 
 
 @app.route("/tests")
@@ -113,15 +115,26 @@ def tests():
 def topics():
     result = []
     cursor = conn.cursor()
-    # TODO: Добавить url на тему и изменить icon на topic_icon
     cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic""")
     for topic_info in cursor:
         result.append({
             "topic_id": topic_info[0],
             "name": topic_info[1],
-            "icon": topic_info[2]
+            "url": DOMAIN + "topic/" + str(topic_info[0]),
+            "topic_icon": topic_info[2]
         })
     return json.dumps(result)
+
+
+@app.route("/topic/<topic_id>")
+def read_topic(topic_id):
+    topic_id = int(topic_id)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT topic_name, filename f FROM tables.topic WHERE id = {topic_id}")
+    topic_data = cursor.fetchall()[0]
+    with open(fr"C:\Users\pankSU\Documents\RP_01\3_server\data\topics\_html\{topic_data[1]}", "r",
+              encoding="utf-8") as content:
+        return render_template("topic.html", content=content.read(), name=topic_data[0])
 
 
 @app.route("/session_id")
@@ -201,6 +214,103 @@ def check_auth_data():
         return "Telegram передал нам плохие данные, попробуйте снова " \
                "пройти операцию, авторизации через приложение"
 
+
+def get_grade(percent):
+    if percent > 0.87:
+        return 5
+    elif percent > 0.72:
+        return 4
+    elif percent > 0.57:
+        return 3
+    elif percent > 0.57:
+        return 2
+
+
+@app.route("/test_data/<int:user_id>", methods=["POST"])
+def check_test_data(user_id):
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT test_now FROM tables.user_stats WHERE user_id = {user_id}""")
+    test_data = cursor.fetchall()[0][0]
+    result = test_data.copy()
+    points = 0
+    for i, question in enumerate(test_data):
+        result[i]["user_answer"] = request.form[(str(i + 1))]
+        if question["question_type"] == "one_answer":
+            result[i]["is_correct"] = question["answers"][int(request.form[(str(i + 1))]) - 1] == \
+                                      question["correct"]
+
+        elif question["question_type"] == "entering":
+            result[i]["is_correct"] = request.form[(str(i + 1))].lower() == \
+                                      question["correct"]
+        elif question["question_type"] == "multiple_answers":
+            user_answers = [question["answers"][int(el) - 1] for el in
+                            request.form.getlist(str(i + 1))]
+            result[i]["user_answer"] = [el for el in request.form.getlist(str(i + 1))]
+            result[i]["is_correct"] = set(user_answers) == set(question["correct"])
+        if result[i]["is_correct"]:
+            points += 1
+    grade = get_grade(points / len(test_data))
+    cursor.execute(f"SELECT grades, test_now FROM tables.user_stats WHERE user_id = {user_id}")
+    grades, test_now = cursor.fetchall()[0]
+    is_found = False
+    average_grade = 0
+
+    for i in range(len(grades)):
+        if test_now[0]["test_id"] == grades[i]["test_id"]:
+            if grades["attempts"] > 0:
+                grades["attempts"] -= 1
+                grades["grade"] = grade
+            is_found = True
+        average_grade += grades["grade"]
+    if not is_found:
+        cursor.execute(f"SELECT attempts FROM tables.test WHERE id = {test_now[0]['test_id']}")
+        grades.append(
+            {"attempts": cursor.fetchall()[0][0] - 1, "test_id": test_now[0]["test_id"],
+             "grade": grade})
+    average_grade /= len(grades)
+    cursor.execute(f"UPDATE user_stats SET grades = {grades}, average_grade = {average_grade},"
+                   f" test_now = '[]'")
+    conn.commit()
+    cursor.close()
+    print(result)
+    return render_template("test_result.html", test_data=result, grade=grade)
+
+
+@app.route("/close_test/", methods=["POST"])
+def close_test():
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT grades, test_now FROM tables.user_stats WHERE user_id = {user_id}")
+    grades, test_now = cursor.fetchall()[0]
+    is_found = False
+    average_grade = 0
+    for i in range(len(grades)):
+        average_grade += grades["grade"]
+        if test_now[0]["test_id"] == grades[i]["test_id"]:
+            if grades["attempts"] > 0:
+                grades["attempts"] -= 1
+            is_found = True
+    if not is_found:
+        cursor.execute(f"SELECT attempts FROM tables.test WHERE id = {test_now[0]['test_id']}")
+        grades.append(
+            {"attempts": cursor.fetchall()[0][0] - 1, "test_id": test_now[0]["test_id"], "grade": 0})
+    average_grade /= len(grades)
+    cursor.execute(
+        f"UPDATE user_stats SET grades = {grades}, average_grade = {average_grade}, test_now = '[]'")
+    conn.commit()
+    cursor.close()
+    return "ok"
+
+@app.route("/generate_integral/")
+def generate_integral():
+    x = symbols("x")
+    a, b = var("a b")
+    integrals_array = [Integral]
 
 # @app.route('/tauth/<int:session_id>')
 # def telegram_auth(session_id: int):

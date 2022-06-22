@@ -5,44 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+
+
+
+    </script>
+
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
     <title>Тестовый тест</title>
 </head>
 <body>
-<form action="http://api.pank.su/test_data" method="post">
+<form action="http://api.pank.su:25565/test_data/891718252" method="post">
     
     
+        <p class="h3 m-3">Сколько будет $ 10 + 5 $?</p>
         
-            <p class="h3">Сколько будет 10 * 5?</p>
-            <div class="mb-3">
+            <div class="m-3">
                 
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="1"
-                               id="1.1">
+                        <input class="form-check-input" value="1" type="radio"
+                               name="1"
+                               id="1.1" required>
                         <label class="form-check-label" for="1.1">
-                            21
-                        </label>
-                    </div>
-                
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="1"
-                               id="1.2">
-                        <label class="form-check-label" for="1.2">
                             50
                         </label>
                     </div>
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="1"
-                               id="1.3">
-                        <label class="form-check-label" for="1.3">
-                            10
+                        <input class="form-check-input" value="2" type="radio"
+                               name="1"
+                               id="1.2" required>
+                        <label class="form-check-label" for="1.2">
+                            15
                         </label>
                     </div>
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="1"
-                               id="1.4">
+                        <input class="form-check-input" value="3" type="radio"
+                               name="1"
+                               id="1.3" required>
+                        <label class="form-check-label" for="1.3">
+                            21
+                        </label>
+                    </div>
+                
+                    <div class="form-check">
+                        <input class="form-check-input" value="4" type="radio"
+                               name="1"
+                               id="1.4" required>
                         <label class="form-check-label" for="1.4">
                             39
                         </label>
@@ -51,56 +71,104 @@
             </div>
         
     
+        <p class="h3 m-3">15 - это _____(не цифра)</p>
         
-    
-        
-            <p class="h3">15 - это _____(не цифра)</p>
-            <div class="mb-3">
-                <input type="text" class="form-control" id="3" placeholder="Ответ:">
+            <div class="m-3">
+                <input type="text" class="form-control" id="2" name="2"
+                       placeholder="Ответ:" required>
             </div>
         
     
+        <p class="h3 m-3">Сколько будет $ 10 \cdot 5 $?</p>
         
-            <p class="h3">Как можно получить число 1?</p>
-            <div class="mb-3">
+            <div class="m-3">
                 
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="4"
+                        <input class="form-check-input" value="1" type="radio"
+                               name="3"
+                               id="3.1" required>
+                        <label class="form-check-label" for="3.1">
+                            50
+                        </label>
+                    </div>
+                
+                    <div class="form-check">
+                        <input class="form-check-input" value="2" type="radio"
+                               name="3"
+                               id="3.2" required>
+                        <label class="form-check-label" for="3.2">
+                            10
+                        </label>
+                    </div>
+                
+                    <div class="form-check">
+                        <input class="form-check-input" value="3" type="radio"
+                               name="3"
+                               id="3.3" required>
+                        <label class="form-check-label" for="3.3">
+                            21
+                        </label>
+                    </div>
+                
+                    <div class="form-check">
+                        <input class="form-check-input" value="4" type="radio"
+                               name="3"
+                               id="3.4" required>
+                        <label class="form-check-label" for="3.4">
+                            39
+                        </label>
+                    </div>
+                
+            </div>
+        
+    
+        <p class="h3 m-3">Как можно получить число 1?</p>
+        
+            <div class="checkbox-group m-3">
+                
+                
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1"
+                               name="4"
                                id="4.1">
                         <label class="form-check-label" for="4.1">
-                            1 * 1
+                            $ 1 \cdot 1 $
                         </label>
                     </div>
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="4"
+                        <input class="form-check-input" type="checkbox" value="2"
+                               name="4"
                                id="4.2">
                         <label class="form-check-label" for="4.2">
-                            1 ^ 1
+                            $ 5 \cdot 5 $
                         </label>
                     </div>
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="4"
+                        <input class="form-check-input" type="checkbox" value="3"
+                               name="4"
                                id="4.3">
                         <label class="form-check-label" for="4.3">
-                            2 * 0.5
+                            $ 2 \cdot 0.5 $
                         </label>
                     </div>
                 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="4"
+                        <input class="form-check-input" type="checkbox" value="4"
+                               name="4"
                                id="4.4">
                         <label class="form-check-label" for="4.4">
-                            5 * 5
+                            $ 1 ^ 1 $
                         </label>
                     </div>
                 
             </div>
         
     
-    <button type="submit" class="btn btn-primary">Отправить</button>
+    <button type="submit" onclick="$('div.checkbox-group.required :checkbox:checked').length > 0" class="btn m-3 btn-primary">Отправить
+    </button>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"

@@ -126,6 +126,10 @@ class LoaderManager(QObject):
         threading.Thread(target=check_connection, args=(self,)).start()
         self.frame_now = "splash.qml"
 
+    @Slot()
+    def close_test(self):
+        requests.post(SERVER_URL + "close_test", headers={"Authorization": self.token})
+
     # Свойства нашего qml-компонента, по которым мы можем обращаться в qml, тем самым выполняя
     # нужный код
     frame_now = Property(str, get_frame_now, set_frame_now, notify=frame_changed)
@@ -150,10 +154,6 @@ def check_connection(loader_manager: LoaderManager):
             loader_manager.secret_key = response.json()["secret_key"]
             threading.Thread(target=check_auth, args=(loader_manager,)).start()
             topics_json = requests.get(SERVER_URL + "topics").json()
-            # TODO: УБРАТЬ добавление url
-            topics_json[0]["topic_icon"] = topics_json[0].pop("icon")
-            topics_json[0]["topic_icon"] = "./offline/topics/Введение/help.png"
-            topics_json[0]["url"] = "./offline/topics/Введение/1.html"
             json_to_qml_model(topics_json, "./models/TopicModel.qml")
         else:
             raise requests.exceptions.ConnectionError

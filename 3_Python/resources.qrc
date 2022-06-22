@@ -12,6 +12,7 @@
         <file alias="exit_icon.svg">res/exit_icon.svg</file>
         <file alias="done_icon.svg">res/done_icon.svg</file>
         <file alias="reload_icon.svg">res/reload_icon.svg</file>
+        <file alias="close_icon.svg">res/close_icon.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>main.qml</file>
