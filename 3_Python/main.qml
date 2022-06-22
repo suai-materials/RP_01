@@ -5,8 +5,10 @@ import QtQuick.Layouts 1.15
 import QtQml 2.15
 import QtWebEngine 1.10
 import QtGraphicalEffects 1.0
+import QtQuick.Dialogs 1.2
 import io.integrals.LoaderManager 1.0
 import "models"
+
 
 
 
@@ -29,6 +31,17 @@ ApplicationWindow {
         // WebEngine.settings.showScrollBars = false
         WebEngine.settings.allowRunningInsecureContent = true
         WebEngine.defaultProfile.persistentCookiesPolicy = WebEngineProfile.AllowPersistentCookies
+    }
+
+    Dialog{
+        id: questionDialog
+        title: "Вы уверены?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        Text{
+            anchors.centerIn: parent
+            text: "Вы уверены, что вы хотите завершить тест и вернуться в меню их выбора?"
+        }
+
     }
 
     LoaderManager{
@@ -80,6 +93,15 @@ ApplicationWindow {
                 visible: loaderManager.frame_now == "generator.qml"
                 onClicked:{
                     loaderManager.reload()
+                }
+            }
+            ToolButton {
+                Layout.alignment: Qt.AlignRight
+                icon.source: "qrc:/drawable/reload_icon.svg"
+                icon.color: "#ffffff"
+                visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "Test"
+                onClicked:{
+                    questionDialog.open()
                 }
             }
         }
