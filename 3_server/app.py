@@ -83,7 +83,6 @@ def tests():
         user_id = get_user_id_by_token(token)
     except Exception:
         return "token not found", 401
-
     cursor = conn.cursor()
     cursor.execute(f"""SELECT grades FROM tables.user_stats WHERE user_id = {user_id}""")
     grades: list = cursor.fetchall()[0][0]
@@ -114,6 +113,7 @@ def tests():
 def topics():
     result = []
     cursor = conn.cursor()
+    # TODO: Добавить url на тему и изменить icon на topic_icon
     cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic""")
     for topic_info in cursor:
         result.append({

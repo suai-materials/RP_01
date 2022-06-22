@@ -30,7 +30,7 @@ GridView {
                 width: parent.width * 0.7
                 height: parent.height * 0.7
                 fillMode: Image.PreserveAspectFit
-                source: topic_icon
+                source: Qt.resolvedUrl(topic_icon)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.topMargin: parent.height * 0.15
             }
@@ -50,7 +50,7 @@ GridView {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                loaderManager.open_topic(pageLoader, url, name)
+                loaderManager.open_webpage(pageLoader, url, name, "Topic")
            }
         }
     }

@@ -22,7 +22,7 @@ ColumnLayout {
                     anchors.fill: parent
                     onClicked: {
                         Qt.openUrlExternally("http://integrals.pank.su/?session=" + loaderManager.session_id)
-                   }
+                    }
                 }
         }
         RoundButton{
@@ -41,7 +41,7 @@ ColumnLayout {
                 verticalAlignment: Text.AlignVCenter
             }
             onClicked: {
-                // loaderManager.mode = "Offline" TODO: УБРАТЬ ЭТО
+                loaderManager.mode = "Offline" // TODO: УБРАТЬ ЭТО
                 loaderManager.frame_now = "topics.qml"
             }
             Material.background: "#FFF7FF"

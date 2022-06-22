@@ -43,7 +43,7 @@ ApplicationWindow {
             ToolButton {
                 icon.source: "qrc:/drawable/nav_btn.svg"
                 icon.color: "#ffffff"
-                visible: loaderManager.frame_now != "topic.qml" && loaderManager.mode != "Offline"
+                visible: loaderManager.frame_now != "webpage.qml" && loaderManager.mode != "Offline"
                 onClicked:{
                     drawer.visible = true
                 }
@@ -51,19 +51,26 @@ ApplicationWindow {
             ToolButton {
                 icon.source: "qrc:/drawable/navigate_next.svg"
                 icon.color: "#ffffff"
-                visible: loaderManager.frame_now == "topic.qml"
+                visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "Topic"
                 onClicked:{
                     loaderManager.frame_now = "topics.qml"
                     loaderManager.header = "Темы"
+                    loaderManager.webpage_mode = "NotShowing"
                 }
             }
             Label {
                 text: loaderManager.header
                 font.pixelSize: 32
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-                Layout.rightMargin: 44
+                anchors.centerIn: parent
+            }
+            ToolButton {
+                Layout.alignment: Qt.AlignRight
+                icon.source: "qrc:/drawable/exit_icon.svg"
+                icon.color: "#ffffff"
+                visible: loaderManager.mode == "Offline"
+                onClicked:{
+                    loaderManager.reload()
+                }
             }
         }
     }

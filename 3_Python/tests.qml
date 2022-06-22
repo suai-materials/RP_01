@@ -34,6 +34,12 @@ Item{
                         width: 35
                         height: 35
                         source: type !== "topic" ? "qrc:/drawable/test_icon.png" : "qrc:/drawable/topics_icon.svg"
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                loaderManager.open_webpage(pageLoader, test_id.toString(), name, "Test")
+                            }
+                        }
                     }
                     Text {
                         text: name
@@ -45,7 +51,16 @@ Item{
                         font.weight: Font.Medium
                         font.pixelSize: 20
                     }
-
+                    Text {
+                        text: grade
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 10
+                        color: "#9499B7"
+                        font.family: "Roboto"
+                        font.weight: Font.Medium
+                        font.pixelSize: 20
+                    }
                 }
 
             }

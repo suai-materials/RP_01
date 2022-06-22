@@ -40,6 +40,9 @@ ColumnLayout {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
+            onClicked: {
+                loaderManager.reload()
+            }
             Material.background: "#F8FDFF"
             radius: 24
         }

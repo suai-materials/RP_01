@@ -15,6 +15,12 @@ class Mode(Enum):
     Online = 0
 
 
+class WebPageMode(Enum):
+    Topic = 0
+    Test = 1
+    NotShowing = 2
+
+
 class LoaderManager(QObject):
     """LoaderManger отвечает за вопросы навигации и запускает функции и потоки в нужный момент"""
 
@@ -25,6 +31,7 @@ class LoaderManager(QObject):
     session_id_changed = Signal(int)
     mode_changed = Signal(str)
     header_changed = Signal(str)
+    webpage_mode_changed = Signal(str)
     secret_key = ""
     token = ""
 
@@ -34,17 +41,33 @@ class LoaderManager(QObject):
     _frame_now = "splash.qml"
     _nav_visibility = False
     _header = "Темы"
+    _webpage_mode = WebPageMode.NotShowing
 
     def __init__(self, parent=None):
         super().__init__(parent)
         threading.Thread(target=check_connection, args=(self,)).start()
 
-    @Slot(QObject, str, str)
-    def open_topic(self, loader: QObject, url: str, name: str):
-        print(url)
-        loader.setProperty("url", url)
+    @Slot(str)
+    def set_webpage_mode(self, webpage_mode_str):
+        self._webpage_mode = \
+            list(filter(lambda webpage_mode: webpage_mode.name == webpage_mode_str, WebPageMode))[0]
+        self.webpage_mode_changed.emit(webpage_mode_str)
+
+    def get_webpage_mode(self):
+        return self._webpage_mode.name
+
+    @Slot(QObject, str, str, str)
+    def open_webpage(self, loader: QObject, url: str, name: str, webpage_mode: str):
+        self.webpage_mode = webpage_mode
+        if self._webpage_mode == WebPageMode.Test:
+            with open("./models/test.html", "w", encoding="utf-8") as test_file:
+                test_file.write(requests.get(SERVER_URL + "test/" + url,
+                                             headers={"Authorization": self.token}).text)
+            loader.setProperty("url", "./models/test.html")
+        else:
+            loader.setProperty("url", url)
         self.header = name
-        self.frame_now = "topic.qml"
+        self.frame_now = "webpage.qml"
 
     def get_frame_now(self):
         return self._frame_now
@@ -88,7 +111,6 @@ class LoaderManager(QObject):
     @Slot(str)
     def set_mode(self, mode_str):
         self._mode = list(filter(lambda mode: mode.name == mode_str, Mode))[0]
-        print(mode_str)
         self.mode_changed.emit(mode_str)
 
     def get_header(self):
@@ -98,6 +120,11 @@ class LoaderManager(QObject):
     def set_header(self, header):
         self._header = header
         self.header_changed.emit(header)
+
+    @Slot()
+    def reload(self):
+        threading.Thread(target=check_connection, args=(self,)).start()
+        self.frame_now = "splash.qml"
 
     # Свойства нашего qml-компонента, по которым мы можем обращаться в qml, тем самым выполняя
     # нужный код
@@ -109,7 +136,8 @@ class LoaderManager(QObject):
     mode = Property(str, get_mode, set_mode,
                     notify=mode_changed)
     header = Property(str, get_header, set_header,
-                    notify=header_changed)
+                      notify=header_changed)
+    webpage_mode = Property(str, get_webpage_mode, set_webpage_mode, notify=webpage_mode_changed)
 
 
 def check_connection(loader_manager: LoaderManager):
@@ -121,6 +149,12 @@ def check_connection(loader_manager: LoaderManager):
             loader_manager.session_id = response.json()["session_id"]
             loader_manager.secret_key = response.json()["secret_key"]
             threading.Thread(target=check_auth, args=(loader_manager,)).start()
+            topics_json = requests.get(SERVER_URL + "topics").json()
+            # TODO: УБРАТЬ добавление url
+            topics_json[0]["topic_icon"] = topics_json[0].pop("icon")
+            topics_json[0]["topic_icon"] = "./offline/topics/Введение/help.png"
+            topics_json[0]["url"] = "./offline/topics/Введение/1.html"
+            json_to_qml_model(topics_json, "./models/TopicModel.qml")
         else:
             raise requests.exceptions.ConnectionError
     except requests.exceptions.ConnectionError:
@@ -140,8 +174,11 @@ def check_auth(loader_manager: LoaderManager):
             response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
         loader_manager.token = response.text
         print(response.text)
-        # TODO: Сделать функцию получения json тем c сервера
+
         loader_manager.frame_now = "topics.qml"
+        tests_json = requests.get(SERVER_URL + "/tests",
+                                  headers={"Authorization": loader_manager.token}).json()
+        json_to_qml_model(tests_json, "./models/TestsModel.qml")
     except requests.exceptions.ConnectionError:
         loader_manager.frame_now = "error.qml"
 
@@ -149,7 +186,7 @@ def check_auth(loader_manager: LoaderManager):
 def json_to_qml_model(json_array: list, filename: str):
     with open(filename, "w", encoding="utf-8") as topic_model_file:
         topic_model_file.write("""import QtQuick 2.0\n
-    ListModel {\n""")
+ListModel {\n""")
         for obj in json_array:
             topic_model_file.write("    ListElement {\n")
             [topic_model_file.write(f"""        {key}: {repr(value)}\n""")

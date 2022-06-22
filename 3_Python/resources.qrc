@@ -9,6 +9,7 @@
         <file alias="navigate_next_r.svg">res/navigate_next_r.svg</file>
         <file alias="test_icon.png">res/test_icon.png</file>
         <file alias="topics_icon.svg">res/topics_icon.svg</file>
+        <file alias="exit_icon.svg">res/exit_icon.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>main.qml</file>
