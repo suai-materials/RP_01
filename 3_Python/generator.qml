@@ -13,13 +13,15 @@ ColumnLayout{
         radius: 24
         WebEngineView{
             // anchors.fill: parent
+            backgroundColor: "transparent"
             anchors.centerIn: parent
             url: "https://integrals.pank.su"
         }
     }
-    Row{
-        Layout.alignment: Qt.AlignHCenter
+    RowLayout{
+        anchors.horizontalCenter: parent.horizontalCenter
         Rectangle{
+            id: label
             width: 237
             height: 56
             color: "#FFF7FF"
@@ -35,9 +37,38 @@ ColumnLayout{
                 verticalAlignment: Text.AlignVCenter
             }
         }
-        TextArea {
-            width: 130
-            height: 56
+        TextField  {
+            anchors.verticalCenter: parent.verticalCenter
+            placeholderText: "Ответ"
+            inputMethodHints : Qt.ImhFormattedNumbersOnly
+            font.family: "Roboto"
+            font.pixelSize: 27
+            validator: DoubleValidator {}
+            color: "#9499B7"
+            bottomPadding: 8
+            background: Rectangle {
+                implicitWidth: 129
+                implicitHeight: 56
+                color: "#FFFFFF"
+                border.color: "#FFF7FF"
+                border.width: 3
+                radius: 12
+            }
+        }
+        Button{
+            background: Rectangle{
+                implicitWidth: 56
+                implicitHeight: 56
+                radius: 12
+                color: "#D1C4E9"
+                border.color: "#FFF7FF"
+                border.width: 5
+            }
+            icon.width: 42
+            icon.height: 42
+            icon.source: "qrc:/drawable/done_icon.svg"
+            icon.color: "#ffffff"
+
         }
     }
 

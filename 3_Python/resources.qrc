@@ -10,6 +10,8 @@
         <file alias="test_icon.png">res/test_icon.png</file>
         <file alias="topics_icon.svg">res/topics_icon.svg</file>
         <file alias="exit_icon.svg">res/exit_icon.svg</file>
+        <file alias="done_icon.svg">res/done_icon.svg</file>
+        <file alias="reload_icon.svg">res/reload_icon.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>main.qml</file>

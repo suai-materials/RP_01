@@ -19,6 +19,7 @@ ApplicationWindow {
     height: 633
     visible: true
     Material.theme: Material.System
+    Material.accent: "#D1C4E9"
     Material.primary: "#9499B7"
     Material.background: "#C5CAE9"
     title: qsTr("integrals.pank.su")
@@ -68,6 +69,15 @@ ApplicationWindow {
                 icon.source: "qrc:/drawable/exit_icon.svg"
                 icon.color: "#ffffff"
                 visible: loaderManager.mode == "Offline"
+                onClicked:{
+                    loaderManager.reload()
+                }
+            }
+            ToolButton {
+                Layout.alignment: Qt.AlignRight
+                icon.source: "qrc:/drawable/reload_icon.svg"
+                icon.color: "#ffffff"
+                visible: loaderManager.frame_now == "generator.qml"
                 onClicked:{
                     loaderManager.reload()
                 }
