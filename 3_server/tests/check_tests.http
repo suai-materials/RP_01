@@ -1,0 +1,2 @@
+GET http://127.0.0.1:25565/tests
+Authorization: 7e7ee53a2d44911260d1a8d05cecfe54e45c4dc486f8cc3f9c69a93fe14779f1

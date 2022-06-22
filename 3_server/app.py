@@ -17,6 +17,14 @@ conn = psycopg2.connect(dbname='integrals', user='postgres',
 app = Flask(__name__)
 
 
+def get_user_id_by_token(token):
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT id FROM tables.users WHERE token = '{token}'""")
+    user_id = cursor.fetchall()[0][0]
+    cursor.close()
+    return user_id
+
+
 @app.route('/', methods=['GET'])
 def dont_be_here():
     return 'Вас не должно быть здесь'
@@ -48,18 +56,37 @@ def check_auth():
 
 @app.route("/test/<int:test_id>")
 def start_test(test_id: int):
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
     cursor = conn.cursor()
     cursor.execute(f"""SELECT * FROM tables.test WHERE id = {test_id}""")
     test = cursor.fetchall()[0]
+    test_data = sample(test[2], test[5])
+    cursor.execute(f"""UPDATE tables.user_stats SET test_now = %s WHERE user_id = {user_id}""",
+                   [json.dumps(test_data)])
+    conn.commit()
     cursor.close()
-    return render_template("test.html", name=test[1], test_data=sample(test[2], test[5]),
+    return render_template("test.html", name=test[1], test_data=test_data,
                            sample=sample, len=len)
 
 
 @app.route("/tests")
 def tests():
     result = []
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
+
     cursor = conn.cursor()
+    cursor.execute(f"""SELECT grades FROM tables.user_stats WHERE user_id = {user_id}""")
+    grades: list = cursor.fetchall()[0][0]
     cursor.execute("""SELECT id, topic_name, tests  FROM tables.topic""")
     for topic_info in cursor:
         result.append({
@@ -68,12 +95,18 @@ def tests():
             "name": topic_info[1]
         })
         for test_id in topic_info[2]:
-            cursor.execute(f"""SELECT test_name FROM tables.test WHERE id = {test_id}""")
+            cursor.execute(f"""SELECT test_name, attempts FROM tables.test WHERE id = {test_id}""")
+            test_data = cursor.fetchall()[0]
+            grade = [grade for grade in grades if grade["test_id"] == test_id]
             result.append({
                 "type": "topicTest",
                 "test_id": test_id,
-                "name": cursor.fetchall()[0][0]
+                "name": test_data[0],
+                "grade": 0 if len(grade) == 0 else grade[0]["grade"],
+                "attempts": test_data[1] if len(grade) == 0 else grade[0]["attempts"]
             })
+
+    cursor.close()
     return json.dumps(result)
 
 
