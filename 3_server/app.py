@@ -367,7 +367,7 @@ def check_generate_data():
         return {"is_correct": True}
     else:
         cursor.execute(f"""UPDATE tables.user_stats SET
-                generator_count =  generator__count + 1 WHERE user_id = {user_id}""")
+                generator_count =  generator_count + 1 WHERE user_id = {user_id}""")
         conn.commit()
         cursor.close()
         return {"is_correct": False}

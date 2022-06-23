@@ -94,6 +94,7 @@ ApplicationWindow {
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "generator.qml"
                 onClicked:{
+                    loaderManager.frame_now = ""
                     loaderManager.frame_now = "generator.qml"
                 }
             }

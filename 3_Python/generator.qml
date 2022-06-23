@@ -27,6 +27,7 @@ ColumnLayout{
     }
     Text{
         id: result
+        visible: false
         text: "Верно"
         anchors.horizontalCenter: parent.horizontalCenter
         font.capitalization: Font.MixedCase
@@ -91,6 +92,7 @@ ColumnLayout{
             icon.color: "#ffffff"
             onClicked:{
                 send_result_btn.enabled = false
+                send_result_btn.visible = false
                 answer.enabled = false
                 result.text = generatorManager.check_answer(answer.text, loaderManager.get_token()) ? "Верно" : "Неверно"
                 result.visible = true
