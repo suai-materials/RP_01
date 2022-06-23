@@ -324,8 +324,7 @@ def generate_integral():
     d = randrange(c, 20)
     integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
                        Integral(a * x ** b, (x, c, d)),
-                       Integral(x ** b, (x, c, d)), Integral(E ** x, (x, 0, 1)),
-                       Integral(a * E ** x, (x, 0, 1))]
+                       Integral(x ** b, (x, c, d)), Integral(a * b), Integral(a + c)]
     i1 = choice(integrals_array)
     a = randrange(0, 10)
     b = randrange(0, 10)
@@ -333,7 +332,7 @@ def generate_integral():
     d = randrange(c, 22)
     integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
                        Integral(a * x ** b, (x, c, d)),
-                       Integral(x ** b, (x, c, d))]
+                       Integral(x ** b, (x, c, d)), Integral(a * b), Integral(a + c)]
     i2 = choice(integrals_array)
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
