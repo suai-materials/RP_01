@@ -3,8 +3,13 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import QtWebEngine 1.10
+import io.integrals.api 1.0
+
 
 ColumnLayout{
+    GeneratorManager{
+        id: generatorManager
+    }
     Rectangle{
         Layout.alignment: Qt.AlignHCenter
         width: 400
@@ -17,8 +22,19 @@ ColumnLayout{
             width: 300
             height: 110
             anchors.centerIn: parent
-            url: "http://api.pank.su:25565/generate_integral/"
+            url:
         }
+    }
+    Text{
+        text: "Верно"
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.capitalization: Font.MixedCase
+        font.family: "Roboto"
+        font.pixelSize: 36
+        color: "#FFF7FF"
+        font.weight: Font.Medium
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
     }
     RowLayout{
         anchors.horizontalCenter: parent.horizontalCenter
@@ -70,7 +86,6 @@ ColumnLayout{
             icon.height: 42
             icon.source: "qrc:/drawable/done_icon.svg"
             icon.color: "#ffffff"
-
         }
     }
 

@@ -346,7 +346,7 @@ def generate_integral():
 
 
 @app.route("/check_generate_integral/", methods=["POST"])
-def generate_integral():
+def check_generate_data():
     user_id: int
     try:
         token = request.headers['Authorization']

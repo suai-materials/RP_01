@@ -6,7 +6,7 @@ import QtQml 2.15
 import QtWebEngine 1.10
 import QtGraphicalEffects 1.0
 import QtQuick.Dialogs 1.3
-import io.integrals.LoaderManager 1.0
+import io.integrals.api 1.0
 import "models"
 
 
