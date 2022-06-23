@@ -88,13 +88,16 @@ def tests():
     cursor = conn.cursor()
     cursor.execute(f"""SELECT grades FROM tables.user_stats WHERE user_id = {user_id}""")
     grades: list = cursor.fetchall()[0][0]
-    cursor.execute("""SELECT id, topic_name, tests  FROM tables.topic""")
-    for topic_info in cursor:
-        result.append({
-            "type": "topic",
-            "topic_id": topic_info[0],
-            "name": topic_info[1]
-        })
+    cursor.execute("""SELECT id, topic_name, tests  FROM tables.topic ORDER BY id""")
+    for topic_info in cursor.fetchall():
+        if len(topic_info[2]) != 0:
+            result.append({
+                "type": "topic",
+                "topic_id": topic_info[0],
+                "name": topic_info[1]
+            })
+        size_now = len(result)
+        grade_topic = 0
         for test_id in topic_info[2]:
             cursor.execute(f"""SELECT test_name, attempts FROM tables.test WHERE id = {test_id}""")
             test_data = cursor.fetchall()[0]
@@ -106,6 +109,8 @@ def tests():
                 "grade": 0 if len(grade) == 0 else grade[0]["grade"],
                 "attempts": test_data[1] if len(grade) == 0 else grade[0]["attempts"]
             })
+            grade_topic += result[-1]["grade"]
+        result[size_now - 1]["grade"] = grade_topic
 
     cursor.close()
     return json.dumps(result)
@@ -115,7 +120,7 @@ def tests():
 def topics():
     result = []
     cursor = conn.cursor()
-    cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic SORT ORDER BY id""")
+    cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic ORDER BY id""")
     for topic_info in cursor:
         result.append({
             "topic_id": topic_info[0],

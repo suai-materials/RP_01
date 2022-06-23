@@ -83,7 +83,7 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/drawable/exit_icon.svg"
                 icon.color: "#ffffff"
-                visible: loaderManager.mode == "Offline"
+                visible: loaderManager.mode == "Offline" || loaderManager.frame_now == "profile.qml"
                 onClicked:{
                     loaderManager.reload()
                 }

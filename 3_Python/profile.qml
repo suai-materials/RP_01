@@ -57,6 +57,14 @@ Item{
             anchors.top: parent.top
             anchors.topMargin: 20
             Text{
+                text: "Ваш средний балл: " + loaderManager.get_avarage_grade()
+                font.family: "Roboto"
+                font.pixelSize: 20
+            }
+            Text{
+                text: "Процент выполненых заданий в генераторе: " + Math.floor(loaderManager.get_generator_percent() * 100) + "%"
+                font.family: "Roboto"
+                font.pixelSize: 20
             }
         }
     }

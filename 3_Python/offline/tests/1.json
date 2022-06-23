@@ -1,0 +1,48 @@
+[
+  {
+    "question_type": "one_answer",
+    "text": "$ \\int f(x) $ Что здесь не хватает?",
+    "answers": [
+      "$ dx $",
+      "тут всего достаточно",
+      "$ + C $"
+    ],
+    "correct": "$ dx $"
+  },
+  {
+    "question_type": "one_answer",
+    "text": "$ \\int f'(x) dx =  $ ",
+    "answers": [
+      "$ f'(x) + C $",
+      "$ f(x) + C $",
+      "$ C $",
+      "$ f'(x) + C' $"
+    ],
+    "correct": "$ dx $"
+  },
+  {
+    "question_type": "entering",
+    "text": "$ \\int \\sin x dx = $",
+    "correct": "cos x"
+  },
+  {
+    "question_type": "entering",
+    "text": "Какая операция является обратной дифференцированию?",
+    "correct": "интегрирование"
+  },
+  {
+    "question_type": "multiple_answers",
+    "text": "Производная - это ...",
+    "answers": [
+      "$ lim_{ x \\to 0 }(\\Delta f(x) : \\Delta x) $",
+      "Интеграл функции",
+      "$ \\frac{ d y }{ d x } $",
+      "Угловой коэффициент"
+    ],
+    "correct": [
+      "$ lim_{ x \\to 0 }(\\Delta f(x) : \\Delta x) $",
+      "Угловой коэффициент",
+      "$ \\frac{ d y }{ d x } $"
+    ]
+  }
+]
