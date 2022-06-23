@@ -130,7 +130,8 @@ def topics():
 def read_topic(topic_id):
     topic_id = int(topic_id)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT topic_name, filename f FROM tables.topic WHERE id = {topic_id} ORDER BY id")
+    cursor.execute(
+        f"SELECT topic_name, filename f FROM tables.topic WHERE id = {topic_id} ORDER BY id")
     topic_data = cursor.fetchall()[0]
     with open(fr"C:\Users\pankSU\Documents\RP_01\3_server\data\topics\_html\{topic_data[1]}", "r",
               encoding="utf-8") as content:
@@ -309,12 +310,12 @@ def close_test():
 
 @app.route("/generate_integral/")
 def generate_integral():
-    # user_id: int
-    # try:
-    #     token = request.headers['Authorization']
-    #     user_id = get_user_id_by_token(token)
-    # except Exception:
-    #     return "token not found", 401
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
     x = symbols("x")
     a, b, c, d = var("a b c d")
     a = randrange(0, 12)
@@ -332,13 +333,62 @@ def generate_integral():
     d = randrange(c, 22)
     integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
                        Integral(a * x ** b, (x, c, d)),
-                       Integral(x ** b, (x, c, d)), Integral(E ** x, (x, 0, 1)),
-                       Integral(a * E ** x, (x, 0, 1))]
+                       Integral(x ** b, (x, c, d))]
     i2 = choice(integrals_array)
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
-    print(f.doit())
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""UPDATE tables.user_stats SET generator_answer = {f.doit()} WHERE user_id = {user_id}""")
+    conn.commit()
+    cursor.close()
     return render_template("generator.html", latex_formul=latex(f))
+
+
+@app.route("/check_generate_integral/", methods=["POST"])
+def generate_integral():
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT generator_answer FROM tables.user_stats WHERE user_id = {user_id}""")
+    if cursor.fetchall()[0][0] == request.json["answer"]:
+        cursor.execute(f"""UPDATE tables.user_stats SET generator_correct =  generator_correct + 1, 
+        generator_count =  generator__count + 1 WHERE user_id = {user_id}""")
+        conn.commit()
+        cursor.close()
+        return {"is_correct": True}
+    else:
+        cursor.execute(f"""UPDATE tables.user_stats SET
+                generator_count =  generator__count + 1 WHERE user_id = {user_id}""")
+        conn.commit()
+        cursor.close()
+        return {"is_correct": False}
+
+
+@app.route("/user_data/")
+def user_data():
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
+    cursor = conn.cursor()
+    cursor.execute(
+        f"""SELECT first_name, last_name, photo_url FROM tables.users WHERE id = {user_id}""")
+    res = cursor.fetchall()[0][0]
+    result = {
+        "first_name": res[0],
+        "last_name": res[1],
+        "photo_url": res[2]
+    }
+    cursor.execute(f"""SELECT grades, avarage_grade, generator_correct, generator_count 
+        FROM tables.users WHERE user_id = {user_id}""")
+    cursor.close()
 
 
 # @app.route('/tauth/<int:session_id>')
