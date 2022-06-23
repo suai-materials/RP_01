@@ -4,13 +4,13 @@ ListModel {
     ListElement {
         type: 'topic'
         topic_id: -1000
-        name: 'TEST'
+        name: 'Введение'
     }
     ListElement {
         type: 'topicTest'
         test_id: 1
         name: 'Тестовый тест'
         grade: 5
-        attempts: 10
+        attempts: 9
     }
 }
