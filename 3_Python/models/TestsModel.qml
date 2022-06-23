@@ -11,6 +11,6 @@ ListModel {
         test_id: 1
         name: 'Тестовый тест'
         grade: 5
-        attempts: 0
+        attempts: 10
     }
 }

@@ -12,10 +12,12 @@ ColumnLayout{
         color: "#FFF7FF"
         radius: 24
         WebEngineView{
+            id: webView
             // anchors.fill: parent
-            backgroundColor: "transparent"
+            width: 300
+            height: 110
             anchors.centerIn: parent
-            url: "https://integrals.pank.su"
+            url: "http://api.pank.su:25565/generate_integral/"
         }
     }
     RowLayout{

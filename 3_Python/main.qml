@@ -32,15 +32,13 @@ ApplicationWindow {
         WebEngine.settings.allowRunningInsecureContent = true
         WebEngine.defaultProfile.persistentCookiesPolicy = WebEngineProfile.AllowPersistentCookies
     }
-
     Dialog{
         id: questionDialog
         title: "Вы уверены?"
         standardButtons: StandardButton.Yes | StandardButton.No
         Text{
             anchors.centerIn: parent
-            text: "Вы уверены, что вы хотите выйти из теста? \n Данные не будут отправлены и попытка потрачена не будет."
-
+            text: "Вы уверены, что вы хотите выйти из теста? \n Данные не будут отправлены и попытка будет потрачена."
         }
         onYes:{
             loaderManager.close_test()
@@ -96,7 +94,7 @@ ApplicationWindow {
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "generator.qml"
                 onClicked:{
-                    loaderManager.reload()
+                    webView.re
                 }
             }
             ToolButton {
@@ -105,7 +103,10 @@ ApplicationWindow {
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "Test"
                 onClicked:{
-                    questionDialog.open()
+                    if (webView.url.includes("test_data"))
+                        loaderManager.frame_now == "tests.qml"
+                    else
+                        questionDialog.open()
                 }
             }
         }

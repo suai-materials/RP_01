@@ -2,11 +2,11 @@ import datetime
 import hashlib
 import hmac
 import json
-from random import sample
+from random import sample, choice, randrange
 
-from sympy import *
 import psycopg2
 from flask import Flask, request, render_template
+from sympy import *
 
 DOMAIN = "http://api.pank.su:25565/"
 BOT_TOKEN = "5472884845:AAGh_XXz2Dlrl2hIcrRF7cWqVqT1C4ZzQB8"
@@ -257,19 +257,19 @@ def check_test_data(user_id):
 
     for i in range(len(grades)):
         if test_now[0]["test_id"] == grades[i]["test_id"]:
-            if grades["attempts"] > 0:
-                grades["attempts"] -= 1
-                grades["grade"] = grade
+            if grades[i]["attempts"] > 0:
+                grades[i]["attempts"] -= 1
+                grades[i]["grade"] = grade
             is_found = True
-        average_grade += grades["grade"]
+        average_grade += grades[i]["grade"]
     if not is_found:
         cursor.execute(f"SELECT attempts FROM tables.test WHERE id = {test_now[0]['test_id']}")
         grades.append(
             {"attempts": cursor.fetchall()[0][0] - 1, "test_id": test_now[0]["test_id"],
              "grade": grade})
     average_grade /= len(grades)
-    cursor.execute(f"UPDATE user_stats SET grades = {grades}, average_grade = {average_grade},"
-                   f" test_now = '[]'")
+    cursor.execute(f"UPDATE tables.user_stats SET grades = %s, average_grade = {average_grade},"
+                   f" test_now = '[]'", [json.dumps(grades)])
     conn.commit()
     cursor.close()
     print(result)
@@ -292,25 +292,47 @@ def close_test():
     for i in range(len(grades)):
         average_grade += grades["grade"]
         if test_now[0]["test_id"] == grades[i]["test_id"]:
-            if grades["attempts"] > 0:
-                grades["attempts"] -= 1
+            if grades[i]["attempts"] > 0:
+                grades[i]["attempts"] -= 1
             is_found = True
     if not is_found:
         cursor.execute(f"SELECT attempts FROM tables.test WHERE id = {test_now[0]['test_id']}")
         grades.append(
             {"attempts": cursor.fetchall()[0][0] - 1, "test_id": test_now[0]["test_id"], "grade": 0})
     average_grade /= len(grades)
-    cursor.execute(
-        f"UPDATE user_stats SET grades = {grades}, average_grade = {average_grade}, test_now = '[]'")
+    cursor.execute(f"UPDATE tables.user_stats SET grades = %s, average_grade = {average_grade},"
+                   f" test_now = '[]'", [json.dumps(grades)])
     conn.commit()
     cursor.close()
     return "ok"
 
+
 @app.route("/generate_integral/")
 def generate_integral():
     x = symbols("x")
-    a, b = var("a b")
-    integrals_array = [Integral]
+    a, b, c, d = var("a b c d")
+    a = randrange(0, 12)
+    b = randrange(0, 12)
+    c = randrange(-10, 10)
+    d = randrange(c, 20)
+    integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
+                       Integral(a * x ** b, (x, c, d)),
+                       Integral(x ** b, (x, c, d)), Integral(E ** x, (x, 0, 1)),
+                       Integral(a * E ** x, (x, 0, 1))]
+    i1 = choice(integrals_array)
+    a = randrange(0, 10)
+    b = randrange(0, 10)
+    c = randrange(-10, 12)
+    d = randrange(c, 22)
+    integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
+                       Integral(a * x ** b, (x, c, d)),
+                       Integral(x ** b, (x, c, d)), Integral(E ** x, (x, 0, 1)),
+                       Integral(a * E ** x, (x, 0, 1))]
+    i2 = choice(integrals_array)
+    funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
+    f = choice(funcs)(i1, i2)
+    return render_template("generator.html", latex_formul=latex(f))
+
 
 # @app.route('/tauth/<int:session_id>')
 # def telegram_auth(session_id: int):

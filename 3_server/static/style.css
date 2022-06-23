@@ -4,10 +4,13 @@ html{
 }
 body{
     color: #9499B7;
+    background: #FFF7FF;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 28px;
+    max-width: 650px;
+    margin: auto;
 }
 h1{
     font-size: 48px;
