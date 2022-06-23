@@ -324,7 +324,8 @@ def generate_integral():
     d = randrange(c, 20)
     integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
                        Integral(a * x ** b, (x, c, d)),
-                       Integral(x ** b, (x, c, d)), Integral(a * b), Integral(a + c)]
+                       Integral(x ** b, (x, c, d)), Integral(a * b, (x, c, d)),
+                       Integral(a + b, (x, c, d))]
     i1 = choice(integrals_array)
     a = randrange(0, 10)
     b = randrange(0, 10)
@@ -332,13 +333,15 @@ def generate_integral():
     d = randrange(c, 22)
     integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
                        Integral(a * x ** b, (x, c, d)),
-                       Integral(x ** b, (x, c, d)), Integral(a * b), Integral(a + c)]
+                       Integral(x ** b, (x, c, d)), Integral(a * b, (x, c, d)),
+                       Integral(a + b, (x, c, d))]
     i2 = choice(integrals_array)
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
     cursor = conn.cursor()
     answer = f.doit()
     print(answer)
+    print(f)
     cursor.execute(
         f"""UPDATE tables.user_stats SET generated_answer = {answer} WHERE user_id = {user_id}""")
     conn.commit()
