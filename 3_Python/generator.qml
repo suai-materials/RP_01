@@ -22,7 +22,7 @@ ColumnLayout{
             width: 300
             height: 110
             anchors.centerIn: parent
-            url:
+            url: generatorManager.generate(loaderManager.get_token())
         }
     }
     Text{

@@ -339,7 +339,7 @@ def generate_integral():
     f = choice(funcs)(i1, i2)
     cursor = conn.cursor()
     cursor.execute(
-        f"""UPDATE tables.user_stats SET generator_answer = {f.doit()} WHERE user_id = {user_id}""")
+        f"""UPDATE tables.user_stats SET generated_answer = {f.doit()} WHERE user_id = {user_id}""")
     conn.commit()
     cursor.close()
     return render_template("generator.html", latex_formul=latex(f))
@@ -354,7 +354,7 @@ def check_generate_data():
     except Exception:
         return "token not found", 401
     cursor = conn.cursor()
-    cursor.execute(f"""SELECT generator_answer FROM tables.user_stats WHERE user_id = {user_id}""")
+    cursor.execute(f"""SELECT generated_answer FROM tables.user_stats WHERE user_id = {user_id}""")
     if cursor.fetchall()[0][0] == request.json["answer"]:
         cursor.execute(f"""UPDATE tables.user_stats SET generator_correct =  generator_correct + 1, 
         generator_count =  generator__count + 1 WHERE user_id = {user_id}""")

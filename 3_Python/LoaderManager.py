@@ -130,6 +130,10 @@ class LoaderManager(QObject):
     def close_test(self):
         requests.post(SERVER_URL + "close_test", headers={"Authorization": self.token})
 
+    @Slot(result=str)
+    def get_token(self):
+        return self.token
+
     # Свойства нашего qml-компонента, по которым мы можем обращаться в qml, тем самым выполняя
     # нужный код
     frame_now = Property(str, get_frame_now, set_frame_now, notify=frame_changed)
