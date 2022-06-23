@@ -338,8 +338,10 @@ def generate_integral():
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
     cursor = conn.cursor()
+    answer = f.doit()
+    print(answer)
     cursor.execute(
-        f"""UPDATE tables.user_stats SET generated_answer = {f.doit()} WHERE user_id = {user_id}""")
+        f"""UPDATE tables.user_stats SET generated_answer = {answer} WHERE user_id = {user_id}""")
     conn.commit()
     cursor.close()
     return render_template("generator.html", latex_formul=latex(f))
