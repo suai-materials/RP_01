@@ -384,7 +384,7 @@ def user_data():
     cursor = conn.cursor()
     cursor.execute(
         f"""SELECT first_name, last_name, photo_url FROM tables.users WHERE id = {user_id}""")
-    res = cursor.fetchall()[0][0]
+    res = cursor.fetchall()[0]
     result = {
         "first_name": res[0],
         "last_name": res[1],
@@ -392,7 +392,7 @@ def user_data():
     }
     cursor.execute(f"""SELECT grades, average_grade, generator_correct, generator_count 
         FROM tables.user_stats WHERE user_id = {user_id}""")
-    res = cursor.fetchall()[0][0]
+    res = cursor.fetchall()[0]
     result["grades"] = res[0]
     result["avarage_grade"] = res[1]
     result["generator_correct"] = res[2]
