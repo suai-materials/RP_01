@@ -26,6 +26,7 @@ ColumnLayout{
         }
     }
     Text{
+        id: result
         text: "Верно"
         anchors.horizontalCenter: parent.horizontalCenter
         font.capitalization: Font.MixedCase
@@ -56,6 +57,7 @@ ColumnLayout{
             }
         }
         TextField  {
+            id: answer
             anchors.verticalCenter: parent.verticalCenter
             placeholderText: "Ответ"
             inputMethodHints : Qt.ImhFormattedNumbersOnly
@@ -74,6 +76,7 @@ ColumnLayout{
             }
         }
         Button{
+            id: send_result_btn
             background: Rectangle{
                 implicitWidth: 56
                 implicitHeight: 56
@@ -86,6 +89,13 @@ ColumnLayout{
             icon.height: 42
             icon.source: "qrc:/drawable/done_icon.svg"
             icon.color: "#ffffff"
+            onClicked:{
+                send_result_btn.enabled = false
+                answer.enabled = false
+                result.text = generatorManager.check_answer(answer.text, loaderManager.get_token()) ? "Верно" : "Неверно"
+                result.visible = true
+
+            }
         }
     }
 

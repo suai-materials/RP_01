@@ -361,7 +361,7 @@ def check_generate_data():
     cursor.execute(f"""SELECT generated_answer FROM tables.user_stats WHERE user_id = {user_id}""")
     if cursor.fetchall()[0][0] == request.json["answer"]:
         cursor.execute(f"""UPDATE tables.user_stats SET generator_correct =  generator_correct + 1, 
-        generator_count =  generator__count + 1 WHERE user_id = {user_id}""")
+        generator_count =  generator_count + 1 WHERE user_id = {user_id}""")
         conn.commit()
         cursor.close()
         return {"is_correct": True}

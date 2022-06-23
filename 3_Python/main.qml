@@ -94,7 +94,7 @@ ApplicationWindow {
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "generator.qml"
                 onClicked:{
-                    webView.re
+                    loaderManager.frame_now = "generator.qml"
                 }
             }
             ToolButton {
