@@ -343,7 +343,7 @@ def generate_integral():
     print(answer)
     print(f)
     cursor.execute(
-        f"""UPDATE tables.user_stats SET generated_answer = {answer} WHERE user_id = {user_id}""")
+        f"""UPDATE tables.user_stats SET generated_answer = {float(answer)} WHERE user_id = {user_id}""")
     conn.commit()
     cursor.close()
     return render_template("generator.html", latex_formul=latex(f))
