@@ -34,6 +34,7 @@ class LoaderManager(QObject):
     webpage_mode_changed = Signal(str)
     secret_key = ""
     token = ""
+    user_data: json
 
     # Приватные переменные
     _session_id = None
@@ -134,6 +135,29 @@ class LoaderManager(QObject):
     def get_token(self):
         return self.token
 
+    @Slot(result=str)
+    def get_first_name(self):
+        return self.user_data["first_name"]
+
+    @Slot(result=str)
+    def get_last_name(self):
+        if self.user_data["last_name"] is not None:
+            return self.user_data["last_name"]
+        else:
+            return ""
+
+    @Slot(result=str)
+    def get_photo_url(self):
+        return self.user_data["photo_url"]
+
+    @Slot(result=float)
+    def get_avarage_grade(self):
+        return self.user_data["avarage_grade"]
+
+    @Slot(result=float)
+    def get_generator_percent(self):
+        return self.user_data["generator_correct"] / self.user_data["generator_count"]
+
     # Свойства нашего qml-компонента, по которым мы можем обращаться в qml, тем самым выполняя
     # нужный код
     frame_now = Property(str, get_frame_now, set_frame_now, notify=frame_changed)
@@ -173,7 +197,7 @@ def check_auth(loader_manager: LoaderManager):
     print(loader_manager.secret_key)
     try:
         response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
-        while response.status_code != 200 or response.text == "wait":
+        while response.status_code != 200 or response.text == "wait" or loader_manager.mode == Mode.Online:
             sleep(1)
             response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
         loader_manager.token = response.text
@@ -182,6 +206,9 @@ def check_auth(loader_manager: LoaderManager):
         loader_manager.frame_now = "topics.qml"
         tests_json = requests.get(SERVER_URL + "/tests",
                                   headers={"Authorization": loader_manager.token}).json()
+        loader_manager.user_data = requests.post(SERVER_URL + "/user_data/",
+                                                 headers={
+                                                     "Authorization": loader_manager.token}).json()
         json_to_qml_model(tests_json, "./models/TestsModel.qml")
     except requests.exceptions.ConnectionError:
         loader_manager.frame_now = "error.qml"

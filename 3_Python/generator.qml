@@ -91,7 +91,7 @@ ColumnLayout{
             icon.source: "qrc:/drawable/done_icon.svg"
             icon.color: "#ffffff"
             onClicked:{
-                send_result_btn.enabled = false
+                // send_result_btn.enabled = false
                 send_result_btn.visible = false
                 answer.enabled = false
                 result.text = generatorManager.check_answer(answer.text, loaderManager.get_token()) ? "Верно" : "Неверно"

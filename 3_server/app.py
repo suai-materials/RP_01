@@ -392,7 +392,13 @@ def user_data():
     }
     cursor.execute(f"""SELECT grades, avarage_grade, generator_correct, generator_count 
         FROM tables.users WHERE user_id = {user_id}""")
+    res = cursor.fetchall()[0][0]
+    result["grades"] = res[0]
+    result["avarage_grade"] = res[1]
+    result["generator_correct"] = res[2]
+    result["generator_count"] = res[3]
     cursor.close()
+    return result
 
 
 # @app.route('/tauth/<int:session_id>')
