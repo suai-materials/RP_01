@@ -337,7 +337,7 @@ def generate_integral():
     i2 = choice(integrals_array)
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
-    print(solve(f))
+    print(f.doit())
     return render_template("generator.html", latex_formul=latex(f))
 
 
