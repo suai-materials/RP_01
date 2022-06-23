@@ -115,7 +115,7 @@ def tests():
 def topics():
     result = []
     cursor = conn.cursor()
-    cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic""")
+    cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic SORT ORDER BY id""")
     for topic_info in cursor:
         result.append({
             "topic_id": topic_info[0],
@@ -130,7 +130,7 @@ def topics():
 def read_topic(topic_id):
     topic_id = int(topic_id)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT topic_name, filename f FROM tables.topic WHERE id = {topic_id}")
+    cursor.execute(f"SELECT topic_name, filename f FROM tables.topic WHERE id = {topic_id} ORDER BY id")
     topic_data = cursor.fetchall()[0]
     with open(fr"C:\Users\pankSU\Documents\RP_01\3_server\data\topics\_html\{topic_data[1]}", "r",
               encoding="utf-8") as content:
