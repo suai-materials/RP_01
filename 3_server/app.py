@@ -390,7 +390,7 @@ def user_data():
         "last_name": res[1],
         "photo_url": res[2]
     }
-    cursor.execute(f"""SELECT grades, avarage_grade, generator_correct, generator_count 
+    cursor.execute(f"""SELECT grades, average_grade, generator_correct, generator_count 
         FROM tables.user_stats WHERE user_id = {user_id}""")
     res = cursor.fetchall()[0][0]
     result["grades"] = res[0]
