@@ -1,28 +1,26 @@
-<h1 id="пределы">Пределы</h1>
+<h1 id="неопределённый-интеграл">Неопределённый интеграл</h1>
+<p>Как раз нахождения множества первообразных(, первообразная + C) и
+есть неопределённый интеграл.</p>
 <p><span
-class="math display">lim<sub><em>x</em> → ∞</sub><em>x</em> = ∞</span></p>
-<p>Преде́л — одно из основных понятий математического анализа, на него
-опираются такие фундаментальные разделы анализа, как непрерывность,
-производная, интеграл, бесконечные ряды и др.</p>
-<h2 id="что-такое-предел">Что такое предел?</h2>
-<p>Для начала давайте разберём запись:</p>
+class="math display">∫<em>f</em>′(<em>x</em>)<em>d</em><em>x</em> = <em>f</em>(<em>x</em>) + <em>C</em></span></p>
+<p>Основные свойства неопределённого интеграла:</p>
 <p><span
-class="math display">lim<sub><em>x</em> → 0</sub><em>x</em> + 2</span></p>
-<p>$ x $ - называют стремлением точки $ x $ к нулю, то есть значение x,
-принимает значения 0.1, 0.00001, 0.0000000001. То есть x практически
-совпадает c нулём.</p>
-<h2 id="нахождение-предела">Нахождение предела</h2>
-<p>Нахождение же предела и есть процесс подстановки вместо переменной x
-число равное тому к которому оно стремиться.</p>
+class="math display">∫<em>k</em> ⋅ <em>f</em>(<em>x</em>)<em>d</em><em>x</em> = <em>k</em> ⋅ ∫<em>f</em>(<em>x</em>)<em>d</em><em>x</em></span></p>
 <p><span
-class="math display">lim<sub><em>x</em> → 1</sub><em>x</em> + 2 = 3</span></p>
-<p>Ещё пример:</p>
-<p><span class="math display">$$ \lim_{x \to 2} \frac{x ^ 2 + 2}{x}  = 3
-$$</span></p>
-<h2 id="предел-и-бесконечность">Предел и бесконечность</h2>
-<p>Если x, под минусом: $ <em>{x } 1 - x = -$ Если x, под плюсом: $
-</em>{x } 15 + x = $</p>
-<p>Если x в степени, то подставляем оставляем x с наибольшей степенью и
-подставляем к нему.</p>
+class="math display">∫(<em>f</em><sub>1</sub>(<em>x</em>)±<em>f</em><sub>2</sub>(<em>x</em>))<em>d</em><em>x</em> = ∫<em>f</em><sub>1</sub>(<em>x</em>)<em>d</em><em>x</em> ± ∫<em>f</em><sub>2</sub>(<em>x</em>)<em>d</em><em>x</em></span></p>
+<h2 id="замена-переменной">Замена переменной</h2>
+<p>Это способ вычисления неопределённого интеграла, с помощью этого
+можно выводить новые формулы.</p>
 <p><span
-class="math display">lim<sub><em>x</em> → ∞</sub><em>x</em><sup>3</sup> − <em>x</em><sup>2</sup> + <em>x</em> = ∞</span></p>
+class="math display">∫<em>f</em>(<em>ϑ</em>(<em>x</em>))<em>ϑ</em>′(<em>x</em>)<em>d</em><em>x</em></span></p>
+<p>Присваиваем переменные $ (x) = t $ и $ ’ (x) dx = dt $</p>
+<p>Получаем:</p>
+<p><span
+class="math display">∫<em>f</em>(<em>t</em>)<em>d</em><em>t</em></span></p>
+<p>И решаем этот интеграл.</p>
+<p>Пример:</p>
+<p><span
+class="math display">∫<em>e</em><sup>(<em>x</em><sup>2</sup>)</sup>2<em>x</em><em>d</em><em>x</em></span></p>
+<p>Присваиваем переменные $ x ^ 2 = t $ и $ 2x dx = dt $</p>
+<p><span
+class="math display">∫<em>e</em><sup><em>t</em></sup><em>d</em><em>t</em> = <em>e</em><sup><em>t</em></sup> + <em>C</em> = <em>e</em><sup>(<em>x</em><sup>2</sup>)</sup> + <em>C</em></span></p>
