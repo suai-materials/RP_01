@@ -206,7 +206,7 @@ def check_auth(loader_manager: LoaderManager):
         loader_manager.frame_now = "topics.qml"
         tests_json = requests.get(SERVER_URL + "/tests",
                                   headers={"Authorization": loader_manager.token}).json()
-        loader_manager.user_data = requests.post(SERVER_URL + "/user_data/",
+        loader_manager.user_data = requests.get(SERVER_URL + "/user_data/",
                                                  headers={
                                                      "Authorization": loader_manager.token}).json()
         json_to_qml_model(tests_json, "./models/TestsModel.qml")

@@ -13,7 +13,7 @@ Item{
             Image {
                 id: img
                 Layout.margins: 20
-                source: 'https://sun9-10.userapi.com/impf/wRfqoB0IOyPhLSlCMRK9D5QRnYS83ASyhPiHsg/dBqabqWzCsw.jpg?size=658x603&quality=96&sign=7f27119c420587e05dcd142cf58a383a&type=album'
+                source: loaderManager.get_photo_url()
                 Layout.preferredWidth: 224
                 Layout.preferredHeight: 224
                 fillMode: Image.PreserveAspectCrop
@@ -33,14 +33,14 @@ Item{
 
             Text{
                 id: first_name
-                text: loaderManager.get
+                text: loaderManager.get_first_name()
                 color: "#000000"
                 font.family: "Roboto"
                 font.pixelSize: 20
             }
             Text{
                 id: last_name
-                text: "Фамилия"
+                text: loaderManager.get_last_name()
                 color: "#000000"
                 font.family: "Roboto"
                 font.pixelSize: 20
