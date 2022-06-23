@@ -309,6 +309,12 @@ def close_test():
 
 @app.route("/generate_integral/")
 def generate_integral():
+    # user_id: int
+    # try:
+    #     token = request.headers['Authorization']
+    #     user_id = get_user_id_by_token(token)
+    # except Exception:
+    #     return "token not found", 401
     x = symbols("x")
     a, b, c, d = var("a b c d")
     a = randrange(0, 12)
@@ -331,6 +337,7 @@ def generate_integral():
     i2 = choice(integrals_array)
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
+    print(f.integrate(x))
     return render_template("generator.html", latex_formul=latex(f))
 
 
