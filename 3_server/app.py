@@ -98,22 +98,22 @@ def tests():
                 "topic_id": topic_info[0],
                 "name": topic_info[1]
             })
-        size_now = len(result)
-        grade_topic = 0
-        for test_id in topic_info[2]:
-            cursor.execute(f"""SELECT test_name, attempts FROM tables.test WHERE id = {test_id}""")
-            test_data = cursor.fetchall()[0]
-            grade = [grade_data for grade_data in grades if grade_data["test_id"] == test_id]
-            result.append({
-                "type": "topicTest",
-                "test_id": test_id,
-                "name": test_data[0],
-                "grade": 0 if len(grade) == 0 else grade[0]["grade"],
-                "attempts": test_data[1] if len(grade) == 0 else grade[0]["attempts"]
-            })
-            grade_topic += result[-1]["grade"]
-        result[size_now - 1]["grade"] = grade_topic / (len(result) - size_now)
-
+            size_now = len(result)
+            grade_topic = 0
+            for test_id in topic_info[2]:
+                cursor.execute(
+                    f"""SELECT test_name, attempts FROM tables.test WHERE id = {test_id}""")
+                test_data = cursor.fetchall()[0]
+                grade = [grade_data for grade_data in grades if grade_data["test_id"] == test_id]
+                result.append({
+                    "type": "topicTest",
+                    "test_id": test_id,
+                    "name": test_data[0],
+                    "grade": 0 if len(grade) == 0 else grade[0]["grade"],
+                    "attempts": test_data[1] if len(grade) == 0 else grade[0]["attempts"]
+                })
+                grade_topic += result[-1]["grade"]
+            result[size_now - 1]["grade"] = grade_topic / (len(result) - size_now)
     cursor.close()
     return json.dumps(result)
 
