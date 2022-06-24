@@ -125,7 +125,7 @@ def tests():
 
 @app.route("/topics")
 def topics():
-    """Список тем"""
+    """Список тем в отформатированном виде"""
     result = []
     cursor = conn.cursor()
     cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic ORDER BY id""")
@@ -357,7 +357,8 @@ def generate_integral():
         i1 = generate_one_integral()
         i2 = generate_one_integral()
         # Действия с интегралами
-        funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
+        funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1,
+                 lambda i1, i2: i2]
         f = choice(funcs)(i1, i2)
         cursor = conn.cursor()
         answer = f.doit()

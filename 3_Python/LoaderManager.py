@@ -74,6 +74,7 @@ class LoaderManager(QObject):
             # Запускаем поток, который проверяет интернет соединение
             threading.Thread(target=check_connection, args=(self,)).start()
         elif frame == "topics.qml" and self._mode == Mode.Offline:
+            # Используем локальные темы
             with open("./offline/topics.json", "r", encoding="utf-8") as topics_file:
                 topics_json = json.loads(str(topics_file.read()))
                 json_to_qml_model(topics_json, "./models/TopicModel.qml")
