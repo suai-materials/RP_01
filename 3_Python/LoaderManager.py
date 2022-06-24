@@ -79,8 +79,8 @@ class LoaderManager(QObject):
                 json_to_qml_model(topics_json, "./models/TopicModel.qml")
         elif frame == "profile.qml":
             self.user_data = requests.get(SERVER_URL + "/user_data/",
-                         headers={
-                             "Authorization": self.token}).json()
+                                          headers={
+                                              "Authorization": self.token}).json()
         self._frame_now = frame
         self.frame_changed.emit(frame)
 

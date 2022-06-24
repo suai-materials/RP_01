@@ -196,7 +196,6 @@ def check_auth_data():
             return "Попробуйте снова перейти по ссылке в приложении"
         cursor.execute(f"SELECT id FROM tables.users WHERE id = {auth_data_dict['id']}")
         if len(cursor.fetchall()) == 0:
-            print(auth_data_dict)
             cursor.execute(
                 f'''INSERT INTO tables.users({", ".join(auth_data_dict.keys())}) VALUES ({", ".join([repr(value) for key, value in auth_data_dict.items()])})''')
             cursor.execute(
@@ -320,9 +319,8 @@ def close_test():
 def generate_one_integral() -> Integral:
     """Генерирование одного интеграла"""
     x = symbols("x")
-    # a, b, c, d = var("a b c d")
     a = randrange(0, 12)
-    b = randrange(0, 12)
+    b = randrange(0, 5)
     c = randrange(-10, 10)
     d = randrange(c, 20)
     integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
@@ -334,6 +332,7 @@ def generate_one_integral() -> Integral:
 
 @app.route("/generate_integral/")
 def generate_integral():
+    """Генерирование выражение с интегралом"""
     user_id: int
     try:
         token = request.headers['Authorization']
@@ -346,10 +345,8 @@ def generate_integral():
     f = choice(funcs)(i1, i2)
     cursor = conn.cursor()
     answer = f.doit()
-    print(answer)
-    print(f)
     cursor.execute(
-        f"""UPDATE tables.user_stats SET generated_answer = {float(answer)} WHERE user_id = {user_id}""")
+        f"""UPDATE tables.user_stats SET generated_answer = {round(float(answer), 2)} WHERE user_id = {user_id}""")
     conn.commit()
     cursor.close()
     return render_template("generator.html", latex_formul=latex(f))
@@ -357,6 +354,7 @@ def generate_integral():
 
 @app.route("/check_generate_integral/", methods=["POST"])
 def check_generate_data():
+    """Проверка ответа на интеграл"""
     user_id: int
     try:
         token = request.headers['Authorization']
@@ -381,6 +379,7 @@ def check_generate_data():
 
 @app.route("/user_data/")
 def user_data():
+    """Получение информации о пользователе"""
     user_id: int
     try:
         token = request.headers['Authorization']
