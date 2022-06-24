@@ -228,7 +228,7 @@ def get_grade(percent):
         return 4
     elif percent > 0.57:
         return 3
-    elif percent > 0.57:
+    else:
         return 2
 
 
@@ -265,7 +265,8 @@ def check_test_data(user_id):
         if test_now[0]["test_id"] == grades[i]["test_id"]:
             if grades[i]["attempts"] > 0:
                 grades[i]["attempts"] -= 1
-                grades[i]["grade"] = grade
+                if grades[i]["grade"] > grade:
+                    grades[i]["grade"] = grade
             is_found = True
         average_grade += grades[i]["grade"]
     if not is_found:
@@ -273,6 +274,7 @@ def check_test_data(user_id):
         grades.append(
             {"attempts": cursor.fetchall()[0][0] - 1, "test_id": test_now[0]["test_id"],
              "grade": grade})
+        average_grade += grade
     average_grade /= len(grades)
     cursor.execute(f"UPDATE tables.user_stats SET grades = %s, average_grade = {average_grade},"
                    f" test_now = '[]'", [json.dumps(grades)])
@@ -404,11 +406,6 @@ def user_data():
     result["generator_count"] = res[3]
     cursor.close()
     return result
-
-
-# @app.route('/tauth/<int:session_id>')
-# def telegram_auth(session_id: int):
-#     return render_template("telegram_auth.html")
 
 
 if __name__ == '__main__':
