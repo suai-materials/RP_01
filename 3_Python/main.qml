@@ -122,7 +122,7 @@ ApplicationWindow {
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "TestResult"
                 onClicked:{
-                    loadderManager.frame_now = "tests.qml"
+                    loaderManager.frame_now = "tests.qml"
                 }
             }
         }

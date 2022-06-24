@@ -12,7 +12,8 @@ class Mode(Enum):
 class WebPageMode(Enum):
     Topic = 0
     Test = 1
-    NotShowing = 2
+    TestResult = 2
+    NotShowing = 3
 
 
 def json_to_qml_model(json_array: list, filename: str):

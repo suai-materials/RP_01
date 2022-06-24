@@ -79,6 +79,7 @@ def start_test(test_id: int):
 @app.route("/tests")
 def tests():
     """Получение списка тестов в отформатированном виде"""
+    # result = response
     result = []
     user_id: int
     try:
@@ -102,7 +103,7 @@ def tests():
         for test_id in topic_info[2]:
             cursor.execute(f"""SELECT test_name, attempts FROM tables.test WHERE id = {test_id}""")
             test_data = cursor.fetchall()[0]
-            grade = [grade for grade in grades if grade["test_id"] == test_id]
+            grade = [grade_data for grade_data in grades if grade_data["test_id"] == test_id]
             result.append({
                 "type": "topicTest",
                 "test_id": test_id,
@@ -111,7 +112,7 @@ def tests():
                 "attempts": test_data[1] if len(grade) == 0 else grade[0]["attempts"]
             })
             grade_topic += result[-1]["grade"]
-        result[size_now - 1]["grade"] = grade_topic
+        result[size_now - 1]["grade"] = grade_topic / (len(result) - size_now)
 
     cursor.close()
     return json.dumps(result)
@@ -339,12 +340,14 @@ def generate_integral():
         user_id = get_user_id_by_token(token)
     except Exception:
         return "token not found", 401
-    i1 = generate_one_integral()
-    i2 = generate_one_integral()
-    funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
-    f = choice(funcs)(i1, i2)
-    cursor = conn.cursor()
-    answer = f.doit()
+    answer = 0
+    while answer == 0:
+        i1 = generate_one_integral()
+        i2 = generate_one_integral()
+        funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
+        f = choice(funcs)(i1, i2)
+        cursor = conn.cursor()
+        answer = f.doit()
     cursor.execute(
         f"""UPDATE tables.user_stats SET generated_answer = {round(float(answer), 2)} WHERE user_id = {user_id}""")
     conn.commit()

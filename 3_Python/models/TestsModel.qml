@@ -25,6 +25,6 @@ ListModel {
         test_id: 2
         name: 'Промежуточная проверка знаний'
         grade: 0
-        attempts: 2
+        attempts: 0
     }
 }

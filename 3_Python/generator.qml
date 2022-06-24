@@ -19,8 +19,8 @@ ColumnLayout{
         WebEngineView{
             id: webView
             // anchors.fill: parent
-            width: 300
-            height: 110
+            width: 350
+            height: 205
             anchors.centerIn: parent
             url: generatorManager.generate(loaderManager.get_token())
         }

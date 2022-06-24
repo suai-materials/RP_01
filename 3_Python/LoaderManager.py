@@ -199,7 +199,6 @@ def check_auth(loader_manager: LoaderManager):
             sleep(1)
             response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
         loader_manager.token = response.text
-        print(response.text)
 
         loader_manager.frame_now = "topics.qml"
         tests_json = requests.get(SERVER_URL + "/tests",

@@ -9,6 +9,9 @@ WebEngineView{
     id: webView
     url: Qt.resolvedUrl(pageLoader.url)
     backgroundColor: "transparent"
+    onNavigationRequested: function(request) {
+        // Если мы перешли на TestResult, то меняем режим
+        if (request.url.toString().includes("test_data"))
+            loaderManager.webpage_mode = "TestResult"
+    }
 }
-
-
