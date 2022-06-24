@@ -16,7 +16,6 @@ ColumnLayout {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: 376
                 Layout.preferredHeight: 64
-                // fillMode: Image.PreserveAspectFit
                 source: "qrc:/drawable/telegram_auth.png"
                 MouseArea {
                     anchors.fill: parent

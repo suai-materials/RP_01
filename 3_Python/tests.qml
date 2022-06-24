@@ -21,6 +21,7 @@ Item{
                 radius: 12
                 color: "#FFF7FF"
                 anchors.left: parent.left
+                // Отступ в зависимости от тип эелемента в модели
                 anchors.leftMargin: type === "topic" ? 0 : (type.includes("sub") ? (type === "subTopic" ? listView.contentWidth * 0.1 : listView.contentWidth * 0.2) : listView.contentWidth * 0.1)
                 width: listView.contentWidth - anchors.leftMargin - 20
                 Row {
@@ -33,11 +34,13 @@ Item{
                         anchors.verticalCenter: parent.verticalCenter
                         width: 35
                         height: 35
+                        // Значок запуска
                         source: type !== "topic" ? "qrc:/drawable/test_icon.png" : "qrc:/drawable/topics_icon.svg"
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                loaderManager.open_webpage(pageLoader, test_id.toString(), name, "Test")
+                                if (type !== "topic")
+                                    loaderManager.open_webpage(pageLoader, test_id.toString(), name, "Test")
                             }
                         }
                     }

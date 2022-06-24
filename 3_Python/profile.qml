@@ -5,6 +5,10 @@ import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.0
 
 Item{
+    ProfileManager{
+        id: profileManager
+        token: loaderManager.get_token()
+    }
     Rectangle {
         height: parent.height
         width: 264
@@ -33,14 +37,14 @@ Item{
 
             Text{
                 id: first_name
-                text: loaderManager.get_first_name()
+                text: profileManager.get_first_name()
                 color: "#000000"
                 font.family: "Roboto"
                 font.pixelSize: 20
             }
             Text{
                 id: last_name
-                text: loaderManager.get_last_name()
+                text: profileManager.get_last_name()
                 color: "#000000"
                 font.family: "Roboto"
                 font.pixelSize: 20
@@ -57,12 +61,12 @@ Item{
             anchors.top: parent.top
             anchors.topMargin: 20
             Text{
-                text: "Ваш средний балл: " + loaderManager.get_avarage_grade()
+                text: "Ваш средний балл: " + profileManager.get_avarage_grade()
                 font.family: "Roboto"
                 font.pixelSize: 20
             }
             Text{
-                text: "Процент выполненых заданий в генераторе: " + Math.floor(loaderManager.get_generator_percent() * 100) + "%"
+                text: "Процент выполненых заданий в генераторе: " + Math.floor(profileManager.get_generator_percent() * 100) + "%"
                 font.family: "Roboto"
                 font.pixelSize: 20
             }

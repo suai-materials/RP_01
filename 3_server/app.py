@@ -401,7 +401,7 @@ def user_data():
         FROM tables.user_stats WHERE user_id = {user_id}""")
     res = cursor.fetchall()[0]
     result["grades"] = res[0]
-    result["avarage_grade"] = res[1]
+    result["average_grade"] = res[1]
     result["generator_correct"] = res[2]
     result["generator_count"] = res[3]
     cursor.close()

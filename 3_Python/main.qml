@@ -14,7 +14,6 @@ import "models"
 
 ApplicationWindow {
     id: appWindow
-    // flags: Qt.FramelessWindowHint
     minimumWidth: 700
     minimumHeight: 500
     width: 1000
@@ -26,12 +25,13 @@ ApplicationWindow {
     Material.background: "#C5CAE9"
     title: qsTr("integrals.pank.su")
     Component.onCompleted: {
+        // Настройка WebEngine
         WebEngine.settings.pluginsEnabled = true
         WebEngine.settings.javascriptEnabled = true
-        // WebEngine.settings.showScrollBars = false
         WebEngine.settings.allowRunningInsecureContent = true
         WebEngine.defaultProfile.persistentCookiesPolicy = WebEngineProfile.AllowPersistentCookies
     }
+    // Диалог, который показывается, когда выходишь из теста
     Dialog{
         id: questionDialog
         title: "Вы уверены?"
@@ -46,16 +46,21 @@ ApplicationWindow {
         }
     }
 
+    // тип созданны в Питоне
     LoaderManager{
         id: loaderManager
     }
 
+    // Заголовок страницы
     header: ToolBar {
         id: toolbar
         Material.foreground: "#ffffff"
         visible: loaderManager.nav_visibility
         RowLayout {
             anchors.fill: parent
+            /* Кнопки которые можно объединить в две, но ради понятности что делает
+            какая кнопка и когда она показыватся, они разделены */
+            // Кнопка навиации
             ToolButton {
                 icon.source: "qrc:/drawable/nav_btn.svg"
                 icon.color: "#ffffff"
@@ -64,6 +69,7 @@ ApplicationWindow {
                     drawer.visible = true
                 }
             }
+            // Кнопка возвращения из темы в список тем
             ToolButton {
                 icon.source: "qrc:/drawable/navigate_next.svg"
                 icon.color: "#ffffff"
@@ -74,11 +80,13 @@ ApplicationWindow {
                     loaderManager.webpage_mode = "NotShowing"
                 }
             }
+            // Заголовок
             Label {
                 text: loaderManager.header
                 font.pixelSize: 32
                 anchors.centerIn: parent
             }
+            // Кнопка перезагрузки приложения, например для смены аккаунта или выхода из офлайн режима
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/drawable/exit_icon.svg"
@@ -88,6 +96,8 @@ ApplicationWindow {
                     loaderManager.reload()
                 }
             }
+
+            // Кнопка обновления примера а генераторе
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/drawable/reload_icon.svg"
@@ -98,20 +108,19 @@ ApplicationWindow {
                     loaderManager.frame_now = "generator.qml"
                 }
             }
+            // Кнопкаа закрытия теста
             ToolButton {
                 Layout.alignment: Qt.AlignRight
                 icon.source: "qrc:/drawable/close_icon.svg"
                 icon.color: "#ffffff"
                 visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "Test"
                 onClicked:{
-                    if (webView.url.includes("test_data"))
-                        loaderManager.frame_now == "tests.qml"
-                    else
-                        questionDialog.open()
+                    questionDialog.open()
                 }
             }
         }
     }
+    // Панель навигации
     Drawer {
         id: drawer
         width: 325
@@ -175,7 +184,7 @@ ApplicationWindow {
             }
         }
     }
-
+    // Переключатель фреймов, зависит от LoaderManager
     Loader{
         property string url
         anchors.fill: parent

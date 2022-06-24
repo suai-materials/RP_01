@@ -18,7 +18,7 @@
       "$ C $",
       "$ f'(x) + C' $"
     ],
-    "correct": "$ dx $"
+    "correct": "$ f(x) + C $"
   },
   {
     "question_type": "entering",

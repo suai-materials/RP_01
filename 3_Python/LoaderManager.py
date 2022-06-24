@@ -1,28 +1,19 @@
 import json
 import threading
-from enum import Enum
+from utils import *
 
 import requests
 
 from PySide2.QtCore import QObject, Slot, Signal, Property
 from time import sleep
 
-SERVER_URL = "http://api.pank.su:25565/"
-
-
-class Mode(Enum):
-    Offline = -1
-    Online = 0
-
-
-class WebPageMode(Enum):
-    Topic = 0
-    Test = 1
-    NotShowing = 2
-
 
 class LoaderManager(QObject):
     """LoaderManger отвечает за вопросы навигации и запускает функции и потоки в нужный момент"""
+
+    # Информация необходимая нам
+    secret_key = ""
+    token = ""
 
     # Сигналы, которые отвечают за уведомление Qt, что что-то произошло, в нашем случае изменение
     # определённой переменной с которой работает qml разметка
@@ -32,9 +23,6 @@ class LoaderManager(QObject):
     mode_changed = Signal(str)
     header_changed = Signal(str)
     webpage_mode_changed = Signal(str)
-    secret_key = ""
-    token = ""
-    user_data: json
 
     # Приватные переменные
     _session_id = None
@@ -122,10 +110,13 @@ class LoaderManager(QObject):
         self._header = header
         self.header_changed.emit(header)
 
+    # Доп. функции для некоторых qml frame'ов
     @Slot()
     def reload(self):
+        """Перезагрузка программы"""
         threading.Thread(target=check_connection, args=(self,)).start()
         self.frame_now = "splash.qml"
+        self.mode = "Online"
 
     @Slot()
     def close_test(self):
@@ -135,31 +126,8 @@ class LoaderManager(QObject):
     def get_token(self):
         return self.token
 
-    @Slot(result=str)
-    def get_first_name(self):
-        return self.user_data["first_name"]
-
-    @Slot(result=str)
-    def get_last_name(self):
-        if self.user_data["last_name"] is not None:
-            return self.user_data["last_name"]
-        else:
-            return ""
-
-    @Slot(result=str)
-    def get_photo_url(self):
-        return self.user_data["photo_url"]
-
-    @Slot(result=float)
-    def get_avarage_grade(self):
-        return self.user_data["avarage_grade"]
-
-    @Slot(result=float)
-    def get_generator_percent(self):
-        return self.user_data["generator_correct"] / self.user_data["generator_count"]
-
-    # Свойства нашего qml-компонента, по которым мы можем обращаться в qml, тем самым выполняя
-    # нужный код
+    # Свойства нашего qml-компонента, по которым мы можем обращаться в qml,
+    # тем самым выполняя нужный код
     frame_now = Property(str, get_frame_now, set_frame_now, notify=frame_changed)
     nav_visibility = Property(bool, get_nav_visibility, set_nav_visibility,
                               notify=nav_visibility_changed)
@@ -173,8 +141,8 @@ class LoaderManager(QObject):
 
 
 def check_connection(loader_manager: LoaderManager):
+    """Проверяет соединение и скачивает информацию о темах"""
     try:
-        # sleep(1.6)
         response = requests.get(SERVER_URL + "session_id")
         if response.status_code == 200:
             loader_manager.frame_now = "auth.qml"
@@ -190,6 +158,7 @@ def check_connection(loader_manager: LoaderManager):
 
 
 def check_auth(loader_manager: LoaderManager):
+    """Проверяет авторизовался ли уже пользователь"""
     secret_data_json = {
         "session_id": loader_manager.session_id,
         "secret_key": loader_manager.secret_key
@@ -206,21 +175,6 @@ def check_auth(loader_manager: LoaderManager):
         loader_manager.frame_now = "topics.qml"
         tests_json = requests.get(SERVER_URL + "/tests",
                                   headers={"Authorization": loader_manager.token}).json()
-        loader_manager.user_data = requests.get(SERVER_URL + "/user_data/",
-                                                 headers={
-                                                     "Authorization": loader_manager.token}).json()
         json_to_qml_model(tests_json, "./models/TestsModel.qml")
     except requests.exceptions.ConnectionError:
         loader_manager.frame_now = "error.qml"
-
-
-def json_to_qml_model(json_array: list, filename: str):
-    with open(filename, "w", encoding="utf-8") as topic_model_file:
-        topic_model_file.write("""import QtQuick 2.0\n
-ListModel {\n""")
-        for obj in json_array:
-            topic_model_file.write("    ListElement {\n")
-            [topic_model_file.write(f"""        {key}: {repr(value)}\n""")
-             for key, value in obj.items()]
-            topic_model_file.write("    }\n")
-        topic_model_file.write("}")
