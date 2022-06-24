@@ -5,7 +5,7 @@ setlocal ENABLEDELAYEDEXPANSION
 
 :: Преобразование всех .md файлов в .html
 for /R %%f in (*.md) do (
-    pandoc "%%f" -o _html\!num!.html
+    pandoc "%%f" --mathjax -o _html\!num!.html
     echo !num!.html
     SET /A num+=1
 )
