@@ -12,14 +12,12 @@ DOMAIN = "http://api.pank.su:25565/"
 BOT_TOKEN = "5472884845:AAGh_XXz2Dlrl2hIcrRF7cWqVqT1C4ZzQB8"
 conn = psycopg2.connect(dbname='integrals', user='postgres',
                         password='200tdhj', host='api.pank.su')
-# cursor = conn.cursor()
-# cursor.execute('SELECT * FROM tables.topic')
-# for row in cursor:
-#     print(row)
+
 app = Flask(__name__)
 
 
 def get_user_id_by_token(token):
+    """Получение id пользователя по его токену"""
     cursor = conn.cursor()
     cursor.execute(f"""SELECT id FROM tables.users WHERE token = '{token}'""")
     user_id = cursor.fetchall()[0][0]
@@ -34,6 +32,7 @@ def dont_be_here():
 
 @app.route("/check_auth", methods=['POST'])
 def check_auth():
+    """Проверяет, есть вошёл ли пользователь"""
     data = request.get_json()
     cursor = conn.cursor()
     cursor.execute(f"""SELECT user_id FROM tables.session 
@@ -58,6 +57,7 @@ def check_auth():
 
 @app.route("/test/<int:test_id>")
 def start_test(test_id: int):
+    """Получение теста"""
     user_id: int
     try:
         token = request.headers['Authorization']
@@ -78,6 +78,7 @@ def start_test(test_id: int):
 
 @app.route("/tests")
 def tests():
+    """Получение списка тестов в отформатированном виде"""
     result = []
     user_id: int
     try:
@@ -118,6 +119,7 @@ def tests():
 
 @app.route("/topics")
 def topics():
+    """Список тем"""
     result = []
     cursor = conn.cursor()
     cursor.execute("""SELECT id, topic_name, icon  FROM tables.topic ORDER BY id""")
@@ -133,6 +135,7 @@ def topics():
 
 @app.route("/topic/<topic_id>")
 def read_topic(topic_id):
+    """Получение темы по id"""
     topic_id = int(topic_id)
     cursor = conn.cursor()
     cursor.execute(
@@ -145,6 +148,7 @@ def read_topic(topic_id):
 
 @app.route("/session_id")
 def session_id():
+    """Получение номера сессии"""
     cursor = conn.cursor()
     cursor.execute(f"SELECT id FROM tables.session WHERE ip = '{request.remote_addr}'")
     session_id = cursor.fetchall()
@@ -174,17 +178,14 @@ def session_id():
 
 @app.route("/check_data")
 def check_auth_data():
+    """Проверка данных, которые прислал телеграм, то есть авторизация пользователя"""
     auth_data_dict = request.args.to_dict()
-    print(auth_data_dict)
     if auth_data_dict["session_id"] == "null":
         return "Please log in with app"
     auth_data = "\n".join(
         sorted([f"{key}={data}" for key, data in auth_data_dict.items() if
                 key != "hash" and key != "session_id"]))
-    # print(auth_data, request.args.to_dict()["hash"])
     SECRET_KEY = hashlib.sha256(BOT_TOKEN.encode('utf-8'))
-    print(hmac.new(SECRET_KEY.digest(), msg=bytearray(auth_data, 'utf-8'),
-                   digestmod=hashlib.sha256).hexdigest())
     if (hmac.new(SECRET_KEY.digest(), msg=bytearray(auth_data, 'utf-8'),
                  digestmod=hashlib.sha256).hexdigest() == auth_data_dict["hash"]):
         auth_data_dict.pop("hash")
@@ -211,8 +212,8 @@ def check_auth_data():
                 {", ".join([f"{key}={repr(data)}" for key, data in auth_data_dict.items()
                             if key != "id"])} 
                 WHERE id = {auth_data_dict["id"]}''')
-            cursor.execute(
-                f'UPDATE tables.session SET user_id = {auth_data_dict["id"]} WHERE id = {auth_data_dict["session_id"]}')
+            cursor.execute(f'''UPDATE tables.session SET user_id = {auth_data_dict["id"]}
+             WHERE id = {auth_data_dict["session_id"]}''')
             conn.commit()
             cursor.close()
             return f"Вы успешно вошли"
@@ -222,6 +223,7 @@ def check_auth_data():
 
 
 def get_grade(percent):
+    """Получение оценки по проценту"""
     if percent > 0.87:
         return 5
     elif percent > 0.72:
@@ -234,6 +236,7 @@ def get_grade(percent):
 
 @app.route("/test_data/<int:user_id>", methods=["POST"])
 def check_test_data(user_id):
+    """Проверка теста"""
     cursor = conn.cursor()
     cursor.execute(f"""SELECT test_now FROM tables.user_stats WHERE user_id = {user_id}""")
     test_data = cursor.fetchall()[0][0]
@@ -280,7 +283,6 @@ def check_test_data(user_id):
                    f" test_now = '[]'", [json.dumps(grades)])
     conn.commit()
     cursor.close()
-    print(result)
     return render_template("test_result.html", test_data=result, grade=grade)
 
 
@@ -315,16 +317,10 @@ def close_test():
     return "ok"
 
 
-@app.route("/generate_integral/")
-def generate_integral():
-    user_id: int
-    try:
-        token = request.headers['Authorization']
-        user_id = get_user_id_by_token(token)
-    except Exception:
-        return "token not found", 401
+def generate_one_integral() -> Integral:
+    """Генерирование одного интеграла"""
     x = symbols("x")
-    a, b, c, d = var("a b c d")
+    # a, b, c, d = var("a b c d")
     a = randrange(0, 12)
     b = randrange(0, 12)
     c = randrange(-10, 10)
@@ -333,16 +329,19 @@ def generate_integral():
                        Integral(a * x ** b, (x, c, d)),
                        Integral(x ** b, (x, c, d)), Integral(a * b, (x, c, d)),
                        Integral(a + b, (x, c, d))]
-    i1 = choice(integrals_array)
-    a = randrange(0, 10)
-    b = randrange(0, 10)
-    c = randrange(-10, 12)
-    d = randrange(c, 22)
-    integrals_array = [Integral(a * x, (x, c, d)), Integral(x, (x, c, d)),
-                       Integral(a * x ** b, (x, c, d)),
-                       Integral(x ** b, (x, c, d)), Integral(a * b, (x, c, d)),
-                       Integral(a + b, (x, c, d))]
-    i2 = choice(integrals_array)
+    return choice(integrals_array)
+
+
+@app.route("/generate_integral/")
+def generate_integral():
+    user_id: int
+    try:
+        token = request.headers['Authorization']
+        user_id = get_user_id_by_token(token)
+    except Exception:
+        return "token not found", 401
+    i1 = generate_one_integral()
+    i2 = generate_one_integral()
     funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
     f = choice(funcs)(i1, i2)
     cursor = conn.cursor()

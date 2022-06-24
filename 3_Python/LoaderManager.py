@@ -14,6 +14,8 @@ class LoaderManager(QObject):
     # Информация необходимая нам
     secret_key = ""
     token = ""
+    user_data: dict
+    io_thread: threading.Thread
 
     # Сигналы, которые отвечают за уведомление Qt, что что-то произошло, в нашем случае изменение
     # определённой переменной с которой работает qml разметка
@@ -34,7 +36,8 @@ class LoaderManager(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        threading.Thread(target=check_connection, args=(self,)).start()
+        self.io_thread = threading.Thread(target=check_connection, args=(self,))
+        self.io_thread.start()
 
     @Slot(str)
     def set_webpage_mode(self, webpage_mode_str):
@@ -64,7 +67,6 @@ class LoaderManager(QObject):
     @Slot(str)
     def set_frame_now(self, frame: str):
         """Смена экранов приложения, SLOT показывает что это setter-свойства qml-элемента"""
-        print(frame)
         self.nav_visibility = True
         if frame in ["splash.qml", "error.qml", "auth.qml"]:
             self.nav_visibility = False
@@ -75,6 +77,10 @@ class LoaderManager(QObject):
             with open("./offline/topics.json", "r", encoding="utf-8") as topics_file:
                 topics_json = json.loads(str(topics_file.read()))
                 json_to_qml_model(topics_json, "./models/TopicModel.qml")
+        elif frame == "profile.qml":
+            self.user_data = requests.get(SERVER_URL + "/user_data/",
+                         headers={
+                             "Authorization": self.token}).json()
         self._frame_now = frame
         self.frame_changed.emit(frame)
 
@@ -126,6 +132,29 @@ class LoaderManager(QObject):
     def get_token(self):
         return self.token
 
+    @Slot(result=str)
+    def get_first_name(self):
+        return self.user_data["first_name"]
+
+    @Slot(result=str)
+    def get_last_name(self):
+        if self.user_data["last_name"] is not None:
+            return self.user_data["last_name"]
+        else:
+            return ""
+
+    @Slot(result=str)
+    def get_photo_url(self):
+        return self.user_data["photo_url"]
+
+    @Slot(result=float)
+    def get_avarage_grade(self):
+        return self.user_data["average_grade"]
+
+    @Slot(result=float)
+    def get_generator_percent(self):
+        return self.user_data["generator_correct"] / self.user_data["generator_count"]
+
     # Свойства нашего qml-компонента, по которым мы можем обращаться в qml,
     # тем самым выполняя нужный код
     frame_now = Property(str, get_frame_now, set_frame_now, notify=frame_changed)
@@ -148,7 +177,8 @@ def check_connection(loader_manager: LoaderManager):
             loader_manager.frame_now = "auth.qml"
             loader_manager.session_id = response.json()["session_id"]
             loader_manager.secret_key = response.json()["secret_key"]
-            threading.Thread(target=check_auth, args=(loader_manager,)).start()
+            loader_manager.io_thread = threading.Thread(target=check_auth, args=(loader_manager,))
+            loader_manager.io_thread.start()
             topics_json = requests.get(SERVER_URL + "topics").json()
             json_to_qml_model(topics_json, "./models/TopicModel.qml")
         else:
@@ -163,7 +193,6 @@ def check_auth(loader_manager: LoaderManager):
         "session_id": loader_manager.session_id,
         "secret_key": loader_manager.secret_key
     }
-    print(loader_manager.secret_key)
     try:
         response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
         while response.status_code != 200 or response.text == "wait" or loader_manager.mode == Mode.Online:

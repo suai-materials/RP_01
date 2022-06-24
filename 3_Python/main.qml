@@ -10,8 +10,6 @@ import io.integrals.api 1.0
 import "models"
 
 
-
-
 ApplicationWindow {
     id: appWindow
     minimumWidth: 700
@@ -80,7 +78,6 @@ ApplicationWindow {
                     loaderManager.webpage_mode = "NotShowing"
                 }
             }
-            // Заголовок
             Label {
                 text: loaderManager.header
                 font.pixelSize: 32
@@ -116,6 +113,16 @@ ApplicationWindow {
                 visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "Test"
                 onClicked:{
                     questionDialog.open()
+                }
+            }
+            // Кнопкаа закрытия результатов теста
+            ToolButton {
+                Layout.alignment: Qt.AlignRight
+                icon.source: "qrc:/drawable/close_icon.svg"
+                icon.color: "#ffffff"
+                visible: loaderManager.frame_now == "webpage.qml" && loaderManager.webpage_mode == "TestResult"
+                onClicked:{
+                    loadderManager.frame_now = "tests.qml"
                 }
             }
         }
