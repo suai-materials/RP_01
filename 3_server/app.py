@@ -27,12 +27,13 @@ def get_user_id_by_token(token):
 
 @app.route('/', methods=['GET'])
 def dont_be_here():
+    """Заглушка на обычный экран, чтобы никто не заходил :)"""
     return 'Вас не должно быть здесь'
 
 
 @app.route("/check_auth", methods=['POST'])
 def check_auth():
-    """Проверяет, есть вошёл ли пользователь"""
+    """Проверяет, вошёл ли пользователь, если вошёл, то выдаём токен"""
     data = request.get_json()
     cursor = conn.cursor()
     cursor.execute(f"""SELECT user_id FROM tables.session 
@@ -41,6 +42,8 @@ def check_auth():
     user_id = cursor.fetchall()
     if len(user_id) != 0:
         user_id = user_id[0][0]
+        # Если id пользователя не указан,
+        # значит пользователь не зашёл и просим программу продолжать ждать
         if user_id == None:
             return "wait"
         token = str(hashlib.sha256(
@@ -57,7 +60,7 @@ def check_auth():
 
 @app.route("/test/<int:test_id>")
 def start_test(test_id: int):
-    """Получение теста"""
+    """Получение теста по id"""
     user_id: int
     try:
         token = request.headers['Authorization']
@@ -67,6 +70,7 @@ def start_test(test_id: int):
     cursor = conn.cursor()
     cursor.execute(f"""SELECT * FROM tables.test WHERE id = {test_id}""")
     test = cursor.fetchall()[0]
+    # test[2] - вопросы, test[5] - их количество
     test_data = sample(test[2], test[5])
     test_data[0]["test_id"] = test_id
     cursor.execute(f"""UPDATE tables.user_stats SET test_now = %s WHERE user_id = {user_id}""",
@@ -92,6 +96,7 @@ def tests():
     grades: list = cursor.fetchall()[0][0]
     cursor.execute("""SELECT id, topic_name, tests  FROM tables.topic ORDER BY id""")
     for topic_info in cursor.fetchall():
+        # Если прикреплённых тестов больше 0
         if len(topic_info[2]) != 0:
             result.append({
                 "type": "topic",
@@ -151,10 +156,12 @@ def read_topic(topic_id):
 def session_id():
     """Получение номера сессии"""
     cursor = conn.cursor()
+    # Получение сессии по ip
     cursor.execute(f"SELECT id FROM tables.session WHERE ip = '{request.remote_addr}'")
     session_id = cursor.fetchall()
     secret_key = str(
         hashlib.sha256((str(datetime.datetime.now()) + str(session_id)).encode()).hexdigest())
+    # Если сессия была найдена, то отправляем новый секретный код и сбрасываем id пользователя
     if len(session_id) != 0:
         session_id = session_id[0][0]
         cursor.execute(
@@ -163,7 +170,7 @@ def session_id():
         conn.commit()
         cursor.close()
         return {"session_id": session_id, "secret_key": secret_key}
-
+    # Если была найдена, то создаём session и возвращаем её данные
     cursor.execute('SELECT MAX(id) FROM tables.session')
     session_id = cursor.fetchall()
     if len(session_id) != 0:
@@ -196,6 +203,7 @@ def check_auth_data():
             cursor.close()
             return "Попробуйте снова перейти по ссылке в приложении"
         cursor.execute(f"SELECT id FROM tables.users WHERE id = {auth_data_dict['id']}")
+        # Если пользователь не зарегистрирован, то идёт добавление всех его данных
         if len(cursor.fetchall()) == 0:
             cursor.execute(
                 f'''INSERT INTO tables.users({", ".join(auth_data_dict.keys())}) VALUES ({", ".join([repr(value) for key, value in auth_data_dict.items()])})''')
@@ -244,6 +252,7 @@ def check_test_data(user_id):
     points = 0
     for i, question in enumerate(test_data):
         result[i]["user_answer"] = request.form[(str(i + 1))]
+        # Проверка ответов в отличчи от типов вопроса
         if question["question_type"] == "one_answer":
             result[i]["is_correct"] = question["answers"][int(request.form[(str(i + 1))]) - 1] == \
                                       question["correct"]
@@ -263,7 +272,7 @@ def check_test_data(user_id):
     grades, test_now = cursor.fetchall()[0]
     is_found = False
     average_grade = 0
-
+    # Выставление оценки
     for i in range(len(grades)):
         if test_now[0]["test_id"] == grades[i]["test_id"]:
             if grades[i]["attempts"] > 0:
@@ -272,6 +281,7 @@ def check_test_data(user_id):
                     grades[i]["grade"] = grade
             is_found = True
         average_grade += grades[i]["grade"]
+    # Если оценки не найдены
     if not is_found:
         cursor.execute(f"SELECT attempts FROM tables.test WHERE id = {test_now[0]['test_id']}")
         grades.append(
@@ -288,6 +298,7 @@ def check_test_data(user_id):
 
 @app.route("/close_test/", methods=["POST"])
 def close_test():
+    """Закрытие теста"""
     user_id: int
     try:
         token = request.headers['Authorization']
@@ -299,6 +310,7 @@ def close_test():
     grades, test_now = cursor.fetchall()[0]
     is_found = False
     average_grade = 0
+    # Код схож, с заполнением результата по выполнению теста, но без выставления оценки
     for i in range(len(grades)):
         average_grade += grades["grade"]
         if test_now[0]["test_id"] == grades[i]["test_id"]:
@@ -344,6 +356,7 @@ def generate_integral():
     while answer == 0:
         i1 = generate_one_integral()
         i2 = generate_one_integral()
+        # Действия с интегралами
         funcs = [lambda i1, i2: i1 + i2, lambda i1, i2: i1 - i2, lambda i1, i2: i1, lambda i1, i2: i2]
         f = choice(funcs)(i1, i2)
         cursor = conn.cursor()
@@ -392,7 +405,9 @@ def user_data():
     cursor = conn.cursor()
     cursor.execute(
         f"""SELECT first_name, last_name, photo_url FROM tables.users WHERE id = {user_id}""")
+    # переменная для результатов запросов
     res = cursor.fetchall()[0]
+    # result = response
     result = {
         "first_name": res[0],
         "last_name": res[1],

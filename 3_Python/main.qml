@@ -12,7 +12,7 @@ import "models"
 
 ApplicationWindow {
     id: appWindow
-    minimumWidth: 700
+    minimumWidth: 750
     minimumHeight: 500
     width: 1000
     height: 633

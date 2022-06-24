@@ -53,7 +53,7 @@
     <title>{{ name }}</title>
 </head>
 <body>
-<form action="http://api.pank.su:25565/test_data/{{ user_id }}" method="post">
+<form action="http://api.pank.su:25565/test_data/{{ user_id }}" onsubmit="" method="post">
     {# Надо перемешать вопросы, до вставки в шаблон #}
     {% for question in test_data %}
         <p class="h3 m-3">{{ question["text"] }}</p>
@@ -61,7 +61,7 @@
             <div class="m-3">
                 {% set question_number = loop.index %}
                 {% for answer in question["answers"] %}
-                    <div class="form-check">
+                    <div class="form-check ">
                         <input class="form-check-input" value="{{ loop.index }}" type="radio"
                                name="{{ question_number }}"
                                id="{{ question_number }}.{{ loop.index }}" required>
