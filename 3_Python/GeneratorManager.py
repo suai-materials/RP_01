@@ -1,10 +1,11 @@
 import requests
-from PySide2.QtCore import QObject, Slot, Signal, Property
+from PySide2.QtCore import QObject, Slot
 
 SERVER_URL = "http://api.pank.su:25565/"
 
 
 class GeneratorManager(QObject):
+    """Генератор примеров"""
     answer: int
 
     def __init__(self, parent=None):

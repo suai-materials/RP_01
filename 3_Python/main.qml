@@ -148,6 +148,7 @@ ApplicationWindow {
                     width: listView.contentWidth
                     height: 40
                     radius: 44
+                    // Если выбран тотт frame на который мы должны выйти
                     color: to_navigate === loaderManager.frame_now ? "#FFF7FF" : "#A094B7"
                     Row{
                         anchors.fill: parent

@@ -38,7 +38,7 @@ def check_auth():
     cursor = conn.cursor()
     cursor.execute(f"""SELECT user_id FROM tables.session 
     WHERE ip = '{request.remote_addr}' AND id = {data['session_id']} AND 
-    secret_key = '{data['secret_key']}'""")
+    secret_key = '{data['secret_key']}' """)
     user_id = cursor.fetchall()
     if len(user_id) != 0:
         user_id = user_id[0][0]
@@ -213,7 +213,7 @@ def check_auth_data():
                 f'''INSERT INTO tables.user_stats(user_id) VALUES ({auth_data_dict["id"]})''')
             conn.commit()
             cursor.close()
-            return f"Вы успешно зарегестрированы"
+            return f"Вы успешно зарегистрированы"
         else:
             cursor.execute(
                 f'''UPDATE tables.users SET 

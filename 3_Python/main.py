@@ -15,8 +15,8 @@ from GeneratorManager import GeneratorManager
 if __name__ == "__main__":
     sys.argv += ['--style', 'material']
     QtWebEngine.initialize()
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)  # использование scaling windows
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)  # использование highdpi иконок
     app = QGuiApplication(sys.argv)
     app.setWindowIcon(QIcon(":/drawable/logo.png"))
     # Регистрация созданных типов

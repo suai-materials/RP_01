@@ -12,6 +12,7 @@ Item{
         anchors.fill: parent
         cellWidth: width / Math.floor(width / 200)
         cellHeight: cellWidth + grid.cellWidth * 0.1
+        // Берём тесты из TopicsModel.qml
         model: TopicModel{}
         ScrollBar.vertical: ScrollBar {
             visible: true

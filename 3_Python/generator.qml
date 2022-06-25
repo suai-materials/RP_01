@@ -18,7 +18,6 @@ ColumnLayout{
         radius: 24
         WebEngineView{
             id: webView
-            // anchors.fill: parent
             width: 350
             height: 205
             anchors.centerIn: parent
@@ -91,6 +90,7 @@ ColumnLayout{
             icon.source: "qrc:/drawable/done_icon.svg"
             icon.color: "#ffffff"
             onClicked:{
+                // Отключение элементов управления
                 send_result_btn.visible = false
                 answer.enabled = false
                 result.text = generatorManager.check_answer(answer.text, loaderManager.get_token()) ? "Верно" : "Неверно"

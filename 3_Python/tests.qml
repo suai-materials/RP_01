@@ -13,6 +13,7 @@ Item{
         anchors.margins: 10
         contentWidth: parent.width
         anchors.fill: parent
+        // Берём тесты из TestsModel.qml
         model: TestsModel {}
         delegate:
         Item{

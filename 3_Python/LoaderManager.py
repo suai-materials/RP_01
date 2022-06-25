@@ -15,6 +15,7 @@ class LoaderManager(QObject):
     secret_key = ""
     token = ""
     user_data: dict
+    # поток отвечающий за ввод и вывод информации
     io_thread: threading.Thread
 
     # Сигналы, которые отвечают за уведомление Qt, что что-то произошло, в нашем случае изменение
@@ -26,7 +27,7 @@ class LoaderManager(QObject):
     header_changed = Signal(str)
     webpage_mode_changed = Signal(str)
 
-    # Приватные переменные
+    # Приватные переменные, к которым подключены Property
     _session_id = None
     _mode: Mode = Mode.Online
     _frame_now = "splash.qml"
@@ -196,7 +197,9 @@ def check_auth(loader_manager: LoaderManager):
     }
     try:
         response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
-        while response.status_code != 200 or response.text == "wait" or loader_manager.mode == Mode.Online:
+        # Пока мы не получим ошибку или ответ мы не перейдём на основную часть приложение
+        while response.status_code != 200 or response.text == "wait" and \
+                loader_manager.mode == "Online":
             sleep(1)
             response = requests.post(SERVER_URL + "check_auth", json=secret_data_json)
         loader_manager.token = response.text
